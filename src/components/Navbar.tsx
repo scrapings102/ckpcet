@@ -105,12 +105,12 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     const slug = COMMITTEE_SLUGS[label] || label.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-').replace(/[^\w-]/g, '');
     return `about/committees/${slug}`;
   }
-  if (parentLabel === 'Affiliations' || (!parentLabel && ['Gujarat Technological University', 'Mandatory Disclosure', 'AICTE Approval'].includes(label))) {
+  if (['Gujarat Technological University', 'Mandatory Disclosure', 'AICTE Approval'].includes(label)) {
     if (label === 'Gujarat Technological University') return 'https://www.gtu.ac.in/';
     if (label === 'Mandatory Disclosure') return 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view';
     if (label === 'AICTE Approval') return 'about/aicte-approval';
   }
-  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report'))) {
+  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report' || (parentLabel === 'NIRF' && label === 'Contact Us')) {
     const NIRF_DRIVE_MAP: Record<string, string> = {
       'Report 2025-26-2': 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view',
       'Report 2025-26-1': 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view',
@@ -124,7 +124,7 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     if (NIRF_DRIVE_MAP[label]) return NIRF_DRIVE_MAP[label];
     return 'about/nirf';
   }
-  if (parentLabel === 'Audit Reports' || (!parentLabel && (label.startsWith('Financial Audit ') || label === 'Audit Reports'))) {
+  if (parentLabel === 'Audit Reports' || label.startsWith('Financial Audit ') || label === 'Audit Reports') {
     const AUDIT_DRIVE_MAP: Record<string, string> = {
       'Financial Audit 2024-25': 'https://drive.google.com/file/d/1OK3dFI2yBUxFVSVIxBRBO0jzW2DsAt-p/view?usp=sharing',
       'Financial Audit 2023-24': 'https://drive.google.com/file/d/1upRfQLbjp9391cqT04FoBLkzShf_prf2/view?usp=sharing',
@@ -492,8 +492,8 @@ const ABOUT_US_TREE: NavTreeItem[] = [
   { label: 'MOUs' },
   { label: 'Grants' },
   { label: 'Affiliations', children: ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'] },
-  { label: 'NIRF', children: ['NIRF Report'] },
-  { label: 'Audit Reports', children: ['Audit Reports'] },
+  { label: 'NIRF', children: ['Report 2025-26-2', 'Report 2025-26-1', 'Report 2024-25-2', 'Report 2024-25-1', 'Report 2023-24', 'Report 2022-23', 'Report 2021-22', 'Report 2020-21', 'Contact Us'] },
+  { label: 'Audit Reports', children: ['Financial Audit 2024-25', 'Financial Audit 2023-24', 'Financial Audit 2022-23', 'Financial Audit 2021-22', 'Financial Audit 2020-21', 'Financial Audit 2019-20', 'Financial Audit 2018-19', 'Financial Audit 2017-18'] },
   { label: 'Aicte Essentials', children: ['AICTE Essentials'] },
 ];
 
@@ -1081,11 +1081,22 @@ function getActiveSectionName(pathname: string): string {
 // children — and returns just that node's children (so clicking into
 // "Institute" only ever shows Institute's own sub-items, not all of About Us).
 function getSubpageDropdownItems(pathname: string, sectionName: string): string[] {
+  const cleanPath = pathname.replace(/^\//, '');
+
+  if (cleanPath === 'about/nirf' || pathname === '/about/nirf') {
+    return ['Contact Us'];
+  }
+  if (cleanPath === 'about/audit-reports' || pathname === '/about/audit-reports') {
+    return ['Audit Reports'];
+  }
+  if (cleanPath === 'about/aicte-essentials' || pathname === '/about/aicte-essentials') {
+    return ['AICTE Essentials'];
+  }
+
   const tree = NAV_TREES[sectionName];
   const fullList = menuSubmaps[sectionName] || [];
   if (!tree) return fullList;
 
-  const cleanPath = pathname.replace(/^\//, '');
   let matchedLabel: string | null = null;
 
   for (const node of tree) {

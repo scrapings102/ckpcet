@@ -7,16 +7,9 @@ import {
   Search, 
   X, 
   ArrowLeft, 
-  Download, 
-  Printer, 
   Sparkles, 
-  CheckCircle2, 
-  Building2, 
-  ShieldCheck, 
-  Award, 
-  Calendar,
-  Eye
 } from "lucide-react";
+import SubPageLayout from "../../components/SubPageLayout";
 
 interface ApprovalLetter {
   year: string;
@@ -59,7 +52,6 @@ const APPROVAL_LETTERS: ApprovalLetter[] = [
 ];
 
 export default function AicteApprovalPage() {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -76,186 +68,141 @@ export default function AicteApprovalPage() {
     }, 2500);
   };
 
-  const handleDownloadPdf = (year: string) => {
-    setToastMessage(`Downloading AICTE Approval Letter for AY ${year}...`);
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 2500);
-  };
-
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="bg-[#F3F6FC] min-h-screen text-slate-800 font-sans pb-20 pt-0">
-      
-      {/* ── TOP BREADCRUMBS & DARK HEADER BANNER ── */}
-      {/* Breadcrumb row */}
-      <div className="bg-[#0F172A] text-white/50 text-[10px] sm:text-xs py-3 border-b border-white/10 select-none">
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-mono tracking-wider text-[11px] sm:text-xs uppercase">
-            <span 
-              onClick={() => navigate("/")} 
-              className="cursor-pointer text-slate-400 hover:text-white transition-colors"
-            >
-              HOME
-            </span>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#2563EB] font-bold">AFFILIATIONS & APPROVALS</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-white font-bold">AICTE APPROVAL</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Title Banner row */}
-      <div className="bg-gradient-to-br from-[#0B1325] via-[#0F172A] to-[#162238] text-white py-8 sm:py-10 lg:py-12 border-b border-blue-900/40 relative overflow-hidden">
-        {/* Subtle dot matrix grid overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 text-left">
-          <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-tight mb-2.5">
-            AICTE Approval
-          </h1>
-          <p className="text-slate-300 font-sans text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed">
-            Official Extension of Approval (EOA) Letters Issued by All India Council for Technical Education (AICTE), New Delhi
-          </p>
-        </div>
-      </div>
-
-      {/* ── MAIN CANVAS CONTAINER (MATCHING REFERENCE IMAGE EXACTLY) ── */}
-      <div className="max-w-[1520px] mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
+    <SubPageLayout
+      title="AICTE Approval"
+      subtitle="Official Extension of Approval (EOA) Letters Issued by All India Council for Technical Education (AICTE), New Delhi"
+      category="affiliations"
+      activeItemLabel="AICTE Approval"
+    >
+      <div className="bg-white rounded-[28px] sm:rounded-[36px] border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 lg:p-10 relative overflow-hidden">
         
-        {/* White Rounded Canvas Card */}
-        <div className="bg-white rounded-[28px] sm:rounded-[36px] border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 lg:p-10 relative overflow-hidden">
+        {/* Subtle Background Pattern */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none" />
+
+        {/* ── HEADER ROW WITH ICON, TITLE, & SEARCH ── */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 mb-8 border-b border-slate-100 relative z-10">
           
-          {/* Subtle Background Pattern */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-25 pointer-events-none" />
-
-          {/* ── HEADER ROW WITH ICON, TITLE, & SEARCH ── */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 mb-8 border-b border-slate-100 relative z-10">
-            
-            {/* Title & Icon */}
-            <div className="flex items-center gap-4">
-              <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#1D4ED8] flex items-center justify-center text-white shrink-0 shadow-md shadow-blue-700/20">
-                <FileText className="w-7 h-7 sm:w-8 sm:h-8" />
-              </div>
-
-              <div>
-                <h2 className="font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight leading-tight">
-                  AICTE Approval Letters
-                </h2>
-                <p className="text-slate-500 font-medium text-xs sm:text-sm mt-1">
-                  Browse and download AICTE approval letters year wise.
-                </p>
-              </div>
+          {/* Title & Icon */}
+          <div className="flex items-center gap-4">
+            <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-[#00509d] flex items-center justify-center text-white shrink-0 shadow-md shadow-blue-700/20">
+              <FileText className="w-7 h-7 sm:w-8 sm:h-8" />
             </div>
 
-            {/* Top Right Search Input Bar */}
-            <div className="relative w-full md:w-80 shrink-0">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                placeholder="Search year..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#F1F5F9] hover:bg-slate-200/70 focus:bg-white text-slate-800 placeholder-slate-400 font-medium text-xs sm:text-sm pl-10 pr-9 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all duration-200"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 rounded-full"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
+            <div>
+              <h2 className="font-extrabold text-2xl sm:text-3xl text-slate-900 tracking-tight leading-tight">
+                AICTE Approval Letters
+              </h2>
+              <p className="text-slate-500 font-medium text-xs sm:text-sm mt-1">
+                Browse and download AICTE approval letters year wise.
+              </p>
             </div>
-
           </div>
 
-
-          {/* ── 28 YEAR APPROVAL CARDS GRID ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 relative z-10">
-            
-            {filteredLetters.map((letter) => (
-              <div
-                key={letter.year}
-                onClick={() => handleOpenDriveLink(letter)}
-                className="bg-white hover:bg-slate-50/80 border border-slate-200/90 hover:border-blue-400 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-3 shadow-2xs hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative"
-              >
-                
-                {/* Optional "Latest" Blue Pill Badge attached to the top-left */}
-                {letter.isLatest && (
-                  <div className="absolute -top-3 left-4 bg-[#1D4ED8] text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md z-20">
-                    Latest
-                  </div>
-                )}
-
-                {/* Left Round Icon Container */}
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-50 border border-blue-100/90 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-[#1D4ED8] group-hover:text-white group-hover:scale-105 transition-all duration-300 shadow-2xs">
-                  <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
-                </div>
-
-                {/* Card Title & Link Subtitle */}
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg tracking-tight group-hover:text-blue-600 transition-colors leading-tight">
-                    {letter.year}
-                  </h3>
-
-                  <div className="flex items-center gap-1 text-xs font-semibold text-blue-600 group-hover:underline mt-1">
-                    <span>Approval Letter</span>
-                    <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:scale-110" />
-                  </div>
-                </div>
-
-                {/* Right Arrow Icon */}
-                <div className="shrink-0 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all duration-300">
-                  <ChevronRight className="w-5 h-5" />
-                </div>
-
-              </div>
-            ))}
-
-          </div>
-
-          {filteredLetters.length === 0 && (
-            <div className="text-center py-16 bg-slate-50 rounded-2xl border border-dashed border-slate-200 my-4">
-              <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-              <p className="text-slate-700 font-bold text-base">No approval letters found matching "{searchQuery}"</p>
+          {/* Top Right Search Input Bar */}
+          <div className="relative w-full md:w-80 shrink-0">
+            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search year..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full bg-[#F1F5F9] hover:bg-slate-200/70 focus:bg-white text-slate-800 placeholder-slate-400 font-medium text-xs sm:text-sm pl-10 pr-9 py-2.5 sm:py-3 rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all duration-200"
+            />
+            {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="mt-3 text-xs font-bold text-blue-600 hover:underline cursor-pointer"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 rounded-full"
               >
-                Clear Search Filter
+                <X className="w-3.5 h-3.5" />
               </button>
-            </div>
-          )}
-
-
-          {/* ── BOTTOM FOOTER ROW ── */}
-          <div className="mt-10 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-            
-            {/* Left Count Text */}
-            <p className="text-slate-500 font-medium text-xs sm:text-sm">
-              Showing {filteredLetters.length} years of approval letters
-            </p>
-
-            {/* Right Green "← First" Button matching reference image */}
-            <button
-              onClick={handleScrollToTop}
-              className="bg-[#10B981] hover:bg-[#059669] active:scale-95 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-md hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-200 cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>First</span>
-            </button>
-
+            )}
           </div>
 
         </div>
 
-      </div>
+        {/* ── 28 YEAR APPROVAL CARDS GRID ── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6 relative z-10">
+          
+          {filteredLetters.map((letter) => (
+            <div
+              key={letter.year}
+              onClick={() => handleOpenDriveLink(letter)}
+              className="bg-white hover:bg-slate-50/80 border border-slate-200/90 hover:border-blue-400 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-3 shadow-2xs hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300 group cursor-pointer relative"
+            >
+              
+              {/* Optional "Latest" Blue Pill Badge attached to the top-left */}
+              {letter.isLatest && (
+                <div className="absolute -top-3 left-4 bg-[#00509d] text-white font-extrabold text-[10px] uppercase tracking-wider px-3 py-0.5 rounded-full shadow-md z-20">
+                  Latest
+                </div>
+              )}
 
+              {/* Left Round Icon Container */}
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-blue-50 border border-blue-100/90 text-[#00509d] flex items-center justify-center shrink-0 group-hover:bg-[#00509d] group-hover:text-white group-hover:scale-105 transition-all duration-300 shadow-2xs">
+                <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
+              </div>
+
+              {/* Card Title & Link Subtitle */}
+              <div className="min-w-0 flex-1">
+                <h3 className="font-extrabold text-slate-900 text-base sm:text-lg tracking-tight group-hover:text-[#00509d] transition-colors leading-tight">
+                  {letter.year}
+                </h3>
+
+                <div className="flex items-center gap-1 text-xs font-semibold text-[#00509d] group-hover:underline mt-1">
+                  <span>Approval Letter</span>
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:scale-110" />
+                </div>
+              </div>
+
+              {/* Right Arrow Icon */}
+              <div className="shrink-0 text-slate-400 group-hover:text-[#00509d] group-hover:translate-x-1 transition-all duration-300">
+                <ChevronRight className="w-5 h-5" />
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+
+        {filteredLetters.length === 0 && (
+          <div className="text-center py-16 bg-slate-50 rounded-2xl border border-dashed border-slate-200 my-4">
+            <FileText className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-700 font-bold text-base">No approval letters found matching "{searchQuery}"</p>
+            <button
+              onClick={() => setSearchQuery("")}
+              className="mt-3 text-xs font-bold text-blue-600 hover:underline cursor-pointer"
+            >
+              Clear Search Filter
+            </button>
+          </div>
+        )}
+
+        {/* ── BOTTOM FOOTER ROW ── */}
+        <div className="mt-10 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
+          
+          {/* Left Count Text */}
+          <p className="text-slate-500 font-medium text-xs sm:text-sm">
+            Showing {filteredLetters.length} years of approval letters
+          </p>
+
+          {/* Right Green "← First" Button */}
+          <button
+            onClick={handleScrollToTop}
+            className="bg-[#10B981] hover:bg-[#059669] active:scale-95 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-md hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-200 cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>First</span>
+          </button>
+
+        </div>
+
+      </div>
 
       {/* Toast Notice */}
       {toastMessage && (
@@ -264,7 +211,6 @@ export default function AicteApprovalPage() {
           <span>{toastMessage}</span>
         </div>
       )}
-
-    </div>
+    </SubPageLayout>
   );
 }

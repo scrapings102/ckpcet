@@ -43,6 +43,7 @@ import NewsAnnouncementsPage from "./pages/academics/NewsAnnouncementsPage";
 import CurriculumPage from "./pages/academics/CurriculumPage";
 import TimeTablesPage from "./pages/academics/TimeTablesPage";
 import AicteApprovalPage from "./pages/about/AicteApprovalPage";
+import AicteEssentialsPage from "./pages/about/AicteEssentialsPage";
 import CommitteesPage from "./pages/about/Committees";
 import AffiliationsPage from "./pages/about/Affiliations";
 import NirfPage from "./pages/about/Nirf";
@@ -274,8 +275,9 @@ export default function App() {
               <Route path="/about/aicte" element={<AicteApprovalPage />} />
               <Route path="/aicte-approval" element={<AicteApprovalPage />} />
               <Route path="/aicte" element={<AicteApprovalPage />} />
-              <Route path="/aicte-essentials" element={<AicteApprovalPage />} />
-              <Route path="/about/aicte-essentials" element={<AicteApprovalPage />} />
+              <Route path="/aicte-essentials" element={<AicteEssentialsPage />} />
+              <Route path="/about/aicte-essentials" element={<AicteEssentialsPage />} />
+              <Route path="/about/aicte-essentials/aicte-essentials" element={<AicteEssentialsPage />} />
 
               {/* Committees, Affiliations, NIRF, and Audit Reports Routes */}
               <Route path="/about/committees" element={<CommitteesPage />} />

@@ -113,15 +113,7 @@ export const CATEGORY_LINKS: Record<string, { label: string; path: string }[]> =
     { label: 'Mandatory Disclosure', path: 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view' },
   ],
   nirf: [
-    { label: 'Report 2025-26-2', path: 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view' },
-    { label: 'Report 2025-26-1', path: 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view' },
-    { label: 'Report 2024-25-2', path: 'https://drive.google.com/file/d/1s34DoLGe3ndYobkMh-XP20Nt0TB1XNAl/view' },
-    { label: 'Report 2024-25-1', path: 'https://drive.google.com/file/d/12wLD0JzxWgWjnHYQT7lG4_iNARV_Slfd/view' },
-    { label: 'Report 2023-24', path: 'https://drive.google.com/file/d/1Jqx7eRyMm0oveEoO0vHTvo9TyZP3F77I/view' },
-    { label: 'Report 2022-23', path: 'https://drive.google.com/file/d/1KA8TYTjnXbsthcHELe70u0EVjxSf9x43/view' },
-    { label: 'Report 2021-22', path: 'https://drive.google.com/file/d/16VO8AjT7sRSlUfBT95zJNXlmlAClQMvY/view' },
-    { label: 'Report 2020-21', path: 'https://drive.google.com/file/d/1Egim4WDE47URUWNrktXrBDwCTSRkK4zV/view' },
-    { label: 'NIRF Contact Us', path: '/about/nirf' },
+    { label: 'Contact Us', path: '/about/nirf' },
   ],
   'audit-reports': [
     { label: 'Audit Reports', path: '/about/audit-reports' },
