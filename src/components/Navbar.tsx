@@ -1815,14 +1815,15 @@ export default function Navbar({ isReady = true, onOpenAdmissions }: NavbarProps
   useEffect(() => {
     const path = location.pathname;
     if (path === '/') return;
-    if (path.startsWith('/about/')) setActiveSection('About Us');
-    else if (path.startsWith('/courses/') || path.startsWith('/academics/')) setActiveSection('Courses');
-    else if (path.startsWith('/committees/')) setActiveSection('Committees');
-    else if (path.startsWith('/iqac/')) setActiveSection('IQAC');
-    else if (path.startsWith('/staff/')) setActiveSection('Staff');
-    else if (path.startsWith('/campus-life/')) setActiveSection('Campus Life');
-    else if (path.startsWith('/student-corner/')) setActiveSection('Student Corner');
+    if (path.startsWith('/about/') || path.startsWith('/academics/')) setActiveSection('About Us');
+    else if (path.startsWith('/departments/') || path.startsWith('/courses/')) setActiveSection('Departments');
+    else if (path.startsWith('/resources/')) setActiveSection('Resources');
+    else if (path.startsWith('/t-and-p/') || path.startsWith('/placement/')) setActiveSection('T & P');
     else if (path.startsWith('/activities/')) setActiveSection('Activities');
+    else {
+      const sec = getActiveSectionName(path);
+      if (sec) setActiveSection(sec);
+    }
   }, [location.pathname]);
 
   const isScrollingRef = useRef(false);
