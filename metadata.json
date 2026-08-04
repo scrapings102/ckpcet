@@ -1,0 +1,8 @@
+{
+  "name": "CKPCET Final",
+  "description": "A next-generation, highly immersive college website for C.K. Pithawala College of Engineering \u0026 Technology.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

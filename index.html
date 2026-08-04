@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        try {
+          var nativeFetch = window.fetch;
+          var currentFetch = nativeFetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return currentFetch; },
+            set: function(v) { currentFetch = v; },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {}
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>C.K. Pithawalla College of Commerce, Management & Computer Application</title>
+    <link rel="dns-prefetch" href="https://wsrv.nl">
+    <link rel="dns-prefetch" href="https://ckpcmc.org">
+    <link rel="dns-prefetch" href="https://ckpcet.ac.in">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://wsrv.nl" crossorigin>
+    <link rel="preconnect" href="https://ckpcmc.org" crossorigin>
+    <link rel="preconnect" href="https://ckpcet.ac.in" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="image" href="https://wsrv.nl/?url=ckpcet.ac.in/img/home-page/slider/si-01.jpg&w=2400&output=webp&q=95" fetchpriority="high">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600;1,8..60,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
