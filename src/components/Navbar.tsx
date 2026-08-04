@@ -1153,8 +1153,9 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
   const fullList = menuSubmaps[sectionName] || [];
   if (!tree) return fullList;
 
-  // 1. Exact node or child match
+  // 1. Walk each top-level node in the section tree
   for (const node of tree) {
+    // Check if the node's own resolved segment matches cleanPath
     const nodeSeg1 = keyToHashSegment[`${sectionName} > ${node.label}`];
     const nodeSeg2 = keyToHashSegment[node.label];
     const nodeSeg3 = resolveNavSegment(node.label, sectionName, pathname);
@@ -1167,18 +1168,21 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
       return node.children && node.children.length > 0 ? node.children : [node.label];
     }
 
+    // Check each child of that node
     if (node.children && node.children.length > 0) {
       const matchedChild = node.children.find((child) => {
         const seg1 = resolveNavSegment(child, node.label, pathname);
-        const seg2 = keyToHashSegment[`${node.label} > ${child}`];
-        const seg3 = keyToHashSegment[`${sectionName} > ${child}`];
-        const seg4 = keyToHashSegment[child];
+        const seg2 = resolveNavSegment(child, sectionName, pathname);
+        const seg3 = keyToHashSegment[`${node.label} > ${child}`];
+        const seg4 = keyToHashSegment[`${sectionName} > ${child}`];
+        const seg5 = keyToHashSegment[child];
 
         return (
           (seg1 && (seg1 === cleanPath || `/${seg1}` === pathname)) ||
           (seg2 && (seg2 === cleanPath || `/${seg2}` === pathname)) ||
           (seg3 && (seg3 === cleanPath || `/${seg3}` === pathname)) ||
-          (seg4 && (seg4 === cleanPath || `/${seg4}` === pathname))
+          (seg4 && (seg4 === cleanPath || `/${seg4}` === pathname)) ||
+          (seg5 && (seg5 === cleanPath || `/${seg5}` === pathname))
         );
       });
 
@@ -1188,156 +1192,7 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
     }
   }
 
-  // 2. Fuzzy / route prefix / keyword matching across all sections and second-level groups
-  for (const node of tree) {
-    const nLabel = node.label.toLowerCase();
-
-    if (node.children && node.children.length > 0) {
-      if (sectionName === 'About Us' || sectionName === 'About us') {
-        if (node.label === 'Institute') {
-          const instituteRoutes = [
-            'about/overview',
-            'about/vision-mission',
-            'about/founder',
-            'about/trustees',
-            'about/administrative-setup',
-            'about/employee-service-rules',
-            'about/principals-message',
-            'about/reach-us',
-            'about/campus-map',
-            'about/general-information',
-            'about/directors-message',
-            'about/hods-message',
-            'about/trust',
-            'about/mission',
-          ];
-          if (instituteRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-        if (node.label === 'Academics') {
-          const academicRoutes = [
-            'academics',
-            'about/academics',
-            'programs',
-            'programs-offered',
-            'admission',
-            'curriculum',
-            'course-curriculum',
-            'time-tables',
-            'timetables',
-            'notice-board',
-            'news-announcements',
-            'announcements',
-            'innovations',
-            'innovations-teaching',
-            'admin-staff',
-          ];
-          if (academicRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-        if (node.label === 'Committees') {
-          const committeeRoutes = [
-            'about/committees',
-            'about-us/committees',
-            'committees',
-          ];
-          if (committeeRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-        if (node.label === 'Affiliations') {
-          const affiliationRoutes = [
-            'about/affiliations',
-            'about/affiliations-approvals',
-            'about/aicte',
-            'about/aicte-approval',
-            'about/aicte-essentials',
-            'affiliations',
-            'affiliations-approvals',
-            'affiliations-and-approvals',
-            'aicte',
-            'aicte-approval',
-            'aicte-essentials',
-          ];
-          if (affiliationRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-        if (node.label === 'NIRF') {
-          const nirfRoutes = [
-            'about/nirf',
-            'about/nirf-rankings',
-            'about-us/nirf',
-            'nirf',
-          ];
-          if (nirfRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-        if (node.label === 'Audit Reports') {
-          const auditRoutes = [
-            'about/audit-reports',
-            'about/financial-audits',
-            'about-us/audit-reports',
-            'audit-reports',
-          ];
-          if (auditRoutes.some((route) => cleanPath.startsWith(route))) {
-            return node.children;
-          }
-        }
-      }
-
-      if (sectionName === 'Departments') {
-        const deptRoute = DEPT_REAL_ROUTES[node.label];
-        const deptKey = deptRoute ? deptRoute.replace('departments/', '') : '';
-        if (
-          (deptRoute && cleanPath.includes(deptRoute)) ||
-          (deptKey && cleanPath.includes(deptKey)) ||
-          cleanPath.includes(nLabel.replace(/ engineering/g, '').replace(/ /g, '-'))
-        ) {
-          return node.children;
-        }
-      }
-
-      if (sectionName === 'Resources') {
-        if (
-          (node.label === 'Sports' && cleanPath.includes('sport')) ||
-          (node.label === 'Central Library' && (cleanPath.includes('library') || cleanPath.includes('book') || cleanPath.includes('journal'))) ||
-          (node.label === 'Hostel' && cleanPath.includes('hostel')) ||
-          (node.label === 'Central Facilities' && (cleanPath.includes('facil') || cleanPath.includes('workshop') || cleanPath.includes('computer-centre')))
-        ) {
-          return node.children;
-        }
-      }
-
-      if (sectionName === 'T & P' || sectionName === 'Training & Placement') {
-        if (
-          (node.label === 'About T & P' && (cleanPath.includes('about-t-and-p') || cleanPath.includes('rules-and-regulations') || cleanPath.includes('placement-team') || cleanPath.includes('gic'))) ||
-          (node.label === 'Campus Placement' && (cleanPath.includes('procedure') || cleanPath.includes('placement-summary') || cleanPath.includes('placement-records') || cleanPath.includes('companies'))) ||
-          (node.label === 'Training' && (cleanPath.includes('training') || cleanPath.includes('talk') || cleanPath.includes('visit') || cleanPath.includes('higher-studies')))
-        ) {
-          return node.children;
-        }
-      }
-
-      if (sectionName === 'Activities') {
-        if (
-          (node.label === 'Community' && (cleanPath.includes('community') || cleanPath.includes('nss') || cleanPath.includes('cosi') || cleanPath.includes('mysy') || cleanPath.includes('shodh') || cleanPath.includes('vishwakar'))) ||
-          (node.label === 'Clubs' && (cleanPath.includes('club') || cleanPath.includes('dance') || cleanPath.includes('drama') || cleanPath.includes('music') || cleanPath.includes('art') || cleanPath.includes('literature') || cleanPath.includes('photo'))) ||
-          (node.label === 'Events' && (cleanPath.includes('event') || cleanPath.includes('webinar') || cleanPath.includes('workshop') || cleanPath.includes('seminar') || cleanPath.includes('camp') || cleanPath.includes('sttp'))) ||
-          (node.label === 'Festivals' && (cleanPath.includes('fest') || cleanPath.includes('technical') || cleanPath.includes('cultural'))) ||
-          (node.label === 'Media' && (cleanPath.includes('media') || cleanPath.includes('print'))) ||
-          (node.label === 'Programs' && (cleanPath.includes('tfms') || cleanPath.includes('sce')))
-        ) {
-          return node.children;
-        }
-      }
-    }
-  }
-
-  // 3. Fallback to full list only if current path truly cannot be matched to any specific second-level node
+  // 2. Fall back to returning the full section list only if no node or child matches anywhere in the tree
   return fullList;
 }
 
