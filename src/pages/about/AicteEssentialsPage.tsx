@@ -31,11 +31,11 @@ interface EssentialDocument {
 }
 
 const ESSENTIAL_DOCUMENTS: EssentialDocument[] = [
-  { id: 1, title: "Establishment of online grievance redressal", category: "Committees & Cells", url: "/about/committees", isExternal: false, icon: Users },
-  { id: 2, title: "Anti Ragging Committee", category: "Committees & Cells", url: "/about/committees", isExternal: false, icon: ShieldCheck },
-  { id: 3, title: "Establishment of SC ST Committee", category: "Committees & Cells", url: "/about/committees", isExternal: false, icon: Users },
-  { id: 4, title: "Internal Complaint Committee", category: "Committees & Cells", url: "/about/committees", isExternal: false, icon: ShieldCheck },
-  { id: 5, title: "Internal Quality Assurance Cell", category: "Committees & Cells", url: "/iqac/about", isExternal: false, icon: Building2 },
+  { id: 1, title: "Establishment of online grievance redressal", category: "Committees & Cells", url: "", isExternal: false, icon: Users },
+  { id: 2, title: "Anti Ragging Committee", category: "Committees & Cells", url: "", isExternal: false, icon: ShieldCheck },
+  { id: 3, title: "Establishment of SC ST Committee", category: "Committees & Cells", url: "", isExternal: false, icon: Users },
+  { id: 4, title: "Internal Complaint Committee", category: "Committees & Cells", url: "", isExternal: false, icon: ShieldCheck },
+  { id: 5, title: "Internal Quality Assurance Cell", category: "Committees & Cells", url: "", isExternal: false, icon: Building2 },
   { id: 6, title: "Barrier free", category: "Certificates & Infrastructure", url: "https://drive.google.com/file/d/1Ke15ZvZAafWzxhHZsItN6ZHta_cGoiG_/view?usp=sharing", isExternal: true, icon: FileText },
   { id: 7, title: "Fire and safety certificate", category: "Certificates & Infrastructure", url: "https://drive.google.com/file/d/1MigZkFQO0OrIuK_-Mr4ndoVJaNE9aeYV/view?usp=sharing", isExternal: true, icon: Flame },
   { id: 8, title: "MOU with industries", category: "Student Welfare & Industry", url: "/about/mou", isExternal: false, icon: HeartHandshake },
@@ -43,9 +43,9 @@ const ESSENTIAL_DOCUMENTS: EssentialDocument[] = [
   { id: 10, title: "Sports facility", category: "Student Welfare & Industry", url: "/student-corner/sports", isExternal: false, icon: Trophy },
   { id: 11, title: "Feedback Facility for Faculty and Students", category: "Regulatory & Feedback", url: "https://www.aicte.gov.in/feedback/", isExternal: true, icon: MessageSquare },
   { id: 12, title: "Insurance for Students", category: "Student Welfare & Industry", url: "https://drive.google.com/file/d/1pFc0PxwZFkC1ZIl8n3KlM5Ab9a1q8rSm/view", isExternal: true, icon: GraduationCap },
-  { id: 13, title: "Institution industry cell", category: "Student Welfare & Industry", url: "/about/mou", isExternal: false, icon: Building2 },
+  { id: 13, title: "Institution industry cell", category: "Student Welfare & Industry", url: "", isExternal: false, icon: Building2 },
   { id: 14, title: "EOA of AICTE Approval", category: "Regulatory & Feedback", url: "/about/aicte-approval", isExternal: false, icon: FileCheck2 },
-  { id: 15, title: "Appointment of Student Counsellor", category: "Committees & Cells", url: "/about/committees", isExternal: false, icon: Users },
+  { id: 15, title: "Appointment of Student Counsellor", category: "Committees & Cells", url: "", isExternal: false, icon: Users },
 ];
 
 export default function AicteEssentialsPage() {
@@ -62,6 +62,7 @@ export default function AicteEssentialsPage() {
   });
 
   const handleDocumentClick = (doc: EssentialDocument) => {
+    if (!doc.url) return;
     if (doc.isExternal || doc.url.startsWith("http://") || doc.url.startsWith("https://")) {
       window.open(doc.url, "_blank", "noopener,noreferrer");
     } else {
@@ -151,21 +152,39 @@ export default function AicteEssentialsPage() {
           <div className="divide-y divide-slate-100">
             {filteredDocs.map((doc, index) => {
               const IconComp = doc.icon;
+              const isClickable = Boolean(doc.url);
+
               return (
                 <div
                   key={doc.id}
                   onClick={() => handleDocumentClick(doc)}
-                  className="px-6 py-4 hover:bg-blue-50/50 transition-colors flex items-center justify-between gap-4 group cursor-pointer"
+                  className={`px-6 py-4 transition-colors flex items-center justify-between gap-4 ${
+                    isClickable
+                      ? "hover:bg-blue-50/50 group cursor-pointer"
+                      : "opacity-70 bg-slate-50/30 cursor-default"
+                  }`}
                 >
                   <div className="flex items-center gap-4 min-w-0">
-                    <span className="w-7 h-7 rounded-lg bg-slate-100 group-hover:bg-[#00509d] group-hover:text-white text-slate-500 font-mono text-xs font-bold flex items-center justify-center shrink-0 transition-colors">
+                    <span className={`w-7 h-7 rounded-lg font-mono text-xs font-bold flex items-center justify-center shrink-0 transition-colors ${
+                      isClickable
+                        ? "bg-slate-100 group-hover:bg-[#00509d] group-hover:text-white text-slate-500"
+                        : "bg-slate-200/60 text-slate-400"
+                    }`}>
                       {index + 1}
                     </span>
-                    <div className="p-2 rounded-xl bg-slate-50 text-[#00509d] group-hover:bg-blue-100 shrink-0 transition-colors">
+                    <div className={`p-2 rounded-xl shrink-0 transition-colors ${
+                      isClickable
+                        ? "bg-slate-50 text-[#00509d] group-hover:bg-blue-100"
+                        : "bg-slate-100 text-slate-400"
+                    }`}>
                       <IconComp className="w-4 h-4" />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="font-sans font-bold text-sm text-slate-800 group-hover:text-[#00509d] transition-colors leading-snug">
+                      <h4 className={`font-sans font-bold text-sm leading-snug ${
+                        isClickable
+                          ? "text-slate-800 group-hover:text-[#00509d] transition-colors"
+                          : "text-slate-600"
+                      }`}>
                         {doc.title}
                       </h4>
                       <span className="text-[11px] font-mono text-slate-400 block mt-0.5">
@@ -174,15 +193,17 @@ export default function AicteEssentialsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
-                    <span className="hidden sm:inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#00509d] group-hover:underline">
-                      <span>{doc.isExternal ? "Open Document" : "View Details"}</span>
-                      {doc.isExternal ? <ExternalLink className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-[#00509d] group-hover:text-white text-slate-400 flex items-center justify-center transition-all">
-                      {doc.isExternal ? <ExternalLink className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                  {isClickable && (
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="hidden sm:inline-flex items-center gap-1 text-xs font-mono font-semibold text-[#00509d] group-hover:underline">
+                        <span>{doc.isExternal ? "Open Document" : "View Details"}</span>
+                        {doc.isExternal ? <ExternalLink className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-slate-100 group-hover:bg-[#00509d] group-hover:text-white text-slate-400 flex items-center justify-center transition-all">
+                        {doc.isExternal ? <ExternalLink className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               );
             })}

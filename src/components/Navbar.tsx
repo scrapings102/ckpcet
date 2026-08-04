@@ -87,23 +87,20 @@ Object.entries(INSTITUTE_REAL_ROUTES).forEach(([label, route]) => {
 });
 
 export function resolveNavSegment(label: string, parentLabel?: string | null, currentPath?: string): string | undefined {
-  if (label === 'View All Committees') {
-    return 'about/committees';
-  }
   if (parentLabel === 'Committees' || (!parentLabel && ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'].includes(label))) {
     const COMMITTEE_SLUGS: Record<string, string> = {
       'Academic Council': 'academic-council',
       'Co-Curricular Activities': 'co-curricular',
       'Finance': 'finance',
-      'Innovation Council': 'innovation-council',
+      'Innovation Council': 'iinc',
       'Library': 'library',
       'Magazine': 'magazine',
       'NIRF': 'nirf',
-      'NSS Sankul': 'nss-sankul',
-      'Purchase/Equipment': 'purchase-equipment',
+      'NSS Sankul': 'nss',
+      'Purchase/Equipment': 'purchase',
       'Timetable': 'timetable',
-      'Nasha Mukti Hostel Committee': 'nasha-mukti',
-      'ABC ID Committee': 'abc-id'
+      'Nasha Mukti Hostel Committee': 'nmc',
+      'ABC ID Committee': 'abc'
     };
     const slug = COMMITTEE_SLUGS[label] || label.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-').replace(/[^\w-]/g, '');
     return `about/committees/${slug}`;
@@ -188,7 +185,7 @@ export function useSmoothScrollTo() {
   };
 }
 
-const visibleNavSections = scrapedData.navigation_menu.filter(sec => sec.section !== 'Admission');
+const visibleNavSections = scrapedData.navigation_menu.filter(sec => sec.section !== 'Admission' && sec.section !== 'Cells');
 
 export const leftNavItems = visibleNavSections.slice(0, 4).map(sec => ({
   name: sec.section,
@@ -497,7 +494,7 @@ const ABOUT_US_TREE: NavTreeItem[] = [
   { label: 'Affiliations', children: ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'] },
   { label: 'NIRF', children: ['Report 2025-26-2', 'Report 2025-26-1', 'Report 2024-25-2', 'Report 2024-25-1', 'Report 2023-24', 'Report 2022-23', 'Report 2021-22', 'Report 2020-21', 'Contact Us'] },
   { label: 'Audit Reports', children: ['Financial Audit 2024-25', 'Financial Audit 2023-24', 'Financial Audit 2022-23', 'Financial Audit 2021-22', 'Financial Audit 2020-21', 'Financial Audit 2019-20', 'Financial Audit 2018-19', 'Financial Audit 2017-18'] },
-  { label: 'Aicte Essentials', children: ['AICTE Essentials'] },
+  { label: 'AICTE Essentials' },
 ];
 
 const DEPARTMENT_CHILDREN: Record<string, string[]> = {
@@ -1099,7 +1096,7 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
     return ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'];
   }
   if (cleanPath === 'about/committees' || pathname === '/about/committees' || cleanPath.startsWith('about/committees/')) {
-    return ['View All Committees', 'Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'];
+    return ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'];
   }
 
   const tree = NAV_TREES[sectionName];
