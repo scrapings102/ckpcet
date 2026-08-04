@@ -263,7 +263,7 @@ export default function MOUsPage() {
     <SubPageLayout
       title="Memorandum of Understanding"
       subtitle="Industry Collaborations, Corporate Partnerships, and Institutional Growth"
-      category="about"
+      category="t-and-p"
       activeItemLabel="MOUs"
     >
       <div className="max-w-7xl mx-auto space-y-8 py-2">

@@ -306,6 +306,8 @@ export default function App() {
               <Route path="/deans" element={<DeansFacultyPage />} />
 
               {/* MOUs Routes */}
+              <Route path="/t-and-p/mou" element={<MOUsPage />} />
+              <Route path="/training-and-placement/mou" element={<MOUsPage />} />
               <Route path="/about/mou" element={<MOUsPage />} />
               <Route path="/about/direct/mou" element={<MOUsPage />} />
               <Route path="/about/mous" element={<MOUsPage />} />

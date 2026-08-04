@@ -56,6 +56,7 @@ const CATEGORY_NAMES: Record<string, string> = {
   'campus-life': 'Campus Life',
   'student-corner': 'Student Corner',
   activities: 'Activities',
+  't-and-p': 'Training & Placement',
 };
 
 // Map each category to its list of navigation links and their respective display names
@@ -154,6 +155,11 @@ export const CATEGORY_LINKS: Record<string, { label: string; path: string }[]> =
     { label: 'News', path: '/activities/news' },
     { label: 'Achievements', path: '/activities/achievements' },
     { label: 'Events', path: '/activities/events' },
+  ],
+  't-and-p': [
+    { label: 'About T & P', path: '/t-and-p/about-t-and-p/about-t-and-p' },
+    { label: 'Rules & Regulations', path: '/t-and-p/about-t-and-p/rules-and-regulations' },
+    { label: 'MOUs', path: '/t-and-p/mou' },
   ],
 };
 

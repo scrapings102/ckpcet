@@ -55,6 +55,9 @@ keyToHashSegment['Activities > NSS Sankul'] = 'activities/community/nss';
 keyToHashSegment['About T & P > Rules & Regulations'] = 't-and-p/about-t-and-p/rules-and-regulations';
 keyToHashSegment['T & P > Rules & Regulations'] = 't-and-p/about-t-and-p/rules-and-regulations';
 keyToHashSegment['Alumni > Rules & Regulations'] = 'alumni/rules-and-regulations';
+keyToHashSegment['MOUs'] = 't-and-p/mou';
+keyToHashSegment['Training > MOUs'] = 't-and-p/mou';
+keyToHashSegment['T & P > MOUs'] = 't-and-p/mou';
 
 // Map each department's child labels to the parent department's real route
 const DEPT_REAL_ROUTES: Record<string, string> = {
@@ -76,7 +79,6 @@ const INSTITUTE_REAL_ROUTES: Record<string, string> = {
   'Innovations in Teaching & Learning': 'academics/innovations',
   'Admin Staff': 'academics/admin-staff',
   'Deans and Faculty In-charges': 'about/deans',
-  'MOUs': 'about/mou',
   'Grants': 'about/grants',
   'Notice Board': 'academics/notice-board',
   'News & Announcements': 'academics/news-announcements',
@@ -418,7 +420,7 @@ export const getMegaMenuConfig = (sectionName: string, items: string[]): MegaMen
     });
     columns.push({
       title: 'More',
-      items: ['AICTE Essentials', 'Deans and Faculty In-charges', 'MOUs', 'Grants']
+      items: ['AICTE Essentials', 'Deans and Faculty In-charges', 'Grants']
     });
   } else if (sectionName === 'Departments') {
     columns.push({
@@ -455,7 +457,7 @@ export const getMegaMenuConfig = (sectionName: string, items: string[]): MegaMen
     });
     columns.push({
       title: 'Training & Development',
-      items: ['Industrial Training', 'Expert Talks', 'Industrial Visit', 'Higher Studies']
+      items: ['Industrial Training', 'Expert Talks', 'Industrial Visit', 'Higher Studies', 'MOUs']
     });
   } else if (sectionName === 'Activities') {
     columns.push({
@@ -557,7 +559,6 @@ const ABOUT_US_TREE: NavTreeItem[] = [
   { label: 'Academics', children: ['General Information', 'Programs Offered', 'Admission', 'Notice Board', 'News & Announcements', 'Course Curriculum', 'Time Tables', 'Admin Staff', 'Innovations in Teaching & Learning'] },
   { label: 'Committees', children: ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'] },
   { label: 'Deans and Faculty In-charges' },
-  { label: 'MOUs' },
   { label: 'Grants' },
   { label: 'Affiliations', children: ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'] },
   { label: 'NIRF', children: ['Report 2025-26-2', 'Report 2025-26-1', 'Report 2024-25-2', 'Report 2024-25-1', 'Report 2023-24', 'Report 2022-23', 'Report 2021-22', 'Report 2020-21', 'Contact Us'] },
@@ -595,7 +596,7 @@ const RESOURCES_TREE: NavTreeItem[] = [
 const TP_TREE: NavTreeItem[] = [
   { label: 'About T & P', children: ['About T & P', 'Rules & Regulations', 'Placement Team', 'GIC Club', 'Contact @ T&P'] },
   { label: 'Campus Placement', children: ['Procedure', 'Placement Summary', 'Placement Records', 'Companies'] },
-  { label: 'Training', children: ['Industrial Training', 'Expert Talks', 'Industrial Visit', 'Higher Studies'] },
+  { label: 'Training', children: ['Industrial Training', 'Expert Talks', 'Industrial Visit', 'Higher Studies', 'MOUs'] },
 ];
 
 const ACTIVITIES_TREE: NavTreeItem[] = [
