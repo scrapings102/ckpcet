@@ -174,7 +174,7 @@ export default function InnovationsPage() {
     <SubPageLayout
       title="Innovations in Teaching & Learning"
       subtitle="Pedagogical Methodologies, ICT Tools & Modern Student-Centric Learning Practices"
-      category="about"
+      category="academics"
       activeItemLabel="Innovations in Teaching & Learning"
     >
       <div className="max-w-7xl mx-auto space-y-6 py-2">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SubPageLayout from "../../components/SubPageLayout";
 import { 
   Calendar, 
   GraduationCap, 
@@ -125,49 +126,15 @@ export default function TimeTablesPage() {
   };
 
   return (
-    <div className="bg-[#F3F6FC] min-h-screen text-slate-800 font-sans pb-20 pt-0">
-      
-      {/* ── TOP BREADCRUMBS & DARK HEADER BANNER (Matching reference image design) ── */}
-      {/* Breadcrumb row */}
-      <div className="bg-[#0F172A] text-white/50 text-[10px] sm:text-xs py-3 border-b border-white/10 select-none">
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-mono tracking-wider text-[11px] sm:text-xs uppercase">
-            <span 
-              onClick={() => navigate("/")} 
-              className="cursor-pointer text-slate-400 hover:text-white transition-colors"
-            >
-              HOME
-            </span>
-            <span className="text-slate-600">/</span>
-            <span 
-              onClick={() => navigate("/academics/programs-offered")}
-              className="cursor-pointer text-[#2563EB] font-bold hover:text-blue-400 transition-colors"
-            >
-              ACADEMICS
-            </span>
-            <span className="text-slate-600">/</span>
-            <span className="text-white font-bold">ACADEMIC TIME TABLES</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Title Banner row */}
-      <div className="bg-gradient-to-br from-[#0B1325] via-[#0F172A] to-[#162238] text-white py-8 sm:py-10 lg:py-12 border-b border-blue-900/40 relative overflow-hidden">
-        {/* Subtle dot matrix grid overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 text-left">
-          <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-tight mb-2.5">
-            Academic Time Tables
-          </h1>
-          <p className="text-slate-300 font-sans text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed">
-            Semester-Wise Lecture Schedules, Internal Exam Timetables, and GTU Examination Dates
-          </p>
-        </div>
-      </div>
-
-
-      {/* ── MAIN CONTENT TWO-COLUMN GRID ── */}
-      <div className="max-w-[1480px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+    <SubPageLayout
+      category="academics"
+      title="Academic Time Tables"
+      subtitle="Semester-Wise Lecture Schedules, Internal Exam Timetables, and GTU Examination Dates"
+      activeItemLabel="Time Tables"
+    >
+      <div className="text-slate-800 font-sans">
+        {/* ── MAIN CONTENT TWO-COLUMN GRID ── */}
+        <div className="py-2">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* ── LEFT SIDEBAR: FILTER TIMETABLES ── */}
@@ -500,6 +467,7 @@ export default function TimeTablesPage() {
         </div>
       )}
 
-    </div>
+      </div>
+    </SubPageLayout>
   );
 }

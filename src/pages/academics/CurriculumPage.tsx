@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SubPageLayout from "../../components/SubPageLayout";
 import { 
   Home, 
   ChevronRight, 
@@ -141,46 +142,18 @@ export default function CurriculumPage() {
   };
 
   return (
-    <div className="bg-[#F3F6FC] min-h-screen text-slate-800 font-sans pb-20 pt-0">
-      
-      {/* ── TOP BREADCRUMBS & DARK HEADER BANNER (Matching attach image design) ── */}
-      {/* Breadcrumb row */}
-      <div className="bg-[#0F172A] text-white/50 text-[10px] sm:text-xs py-3 border-b border-white/10 select-none">
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-mono tracking-wider text-[11px] sm:text-xs uppercase">
-            <span 
-              onClick={() => navigate("/")} 
-              className="cursor-pointer text-slate-400 hover:text-white transition-colors"
-            >
-              HOME
-            </span>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#2563EB] font-bold">ACADEMICS</span>
-            <span className="text-slate-600">/</span>
-            <span className="text-white font-bold">COURSE CURRICULUM</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Title Banner row */}
-      <div className="bg-gradient-to-br from-[#0B1325] via-[#0F172A] to-[#162238] text-white py-8 sm:py-10 lg:py-12 border-b border-blue-900/40 relative overflow-hidden">
-        {/* Subtle dot matrix grid overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" />
-        <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 relative z-10 text-left">
-          <h1 className="font-serif font-bold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-tight mb-2.5">
-            Course Curriculum
-          </h1>
-          <p className="text-slate-300 font-sans text-xs sm:text-sm md:text-base max-w-3xl leading-relaxed">
-            Semester-Wise GTU Syllabus & Academic Curriculum for All Engineering Programs
-          </p>
-        </div>
-      </div>
-
-      {/* MAIN OUTER CANVAS CARD */}
-      <div className="max-w-[1520px] mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
-        
-        {/* Main White Card matching reference layout */}
-        <div className="bg-white rounded-[28px] sm:rounded-[36px] border border-slate-200/90 shadow-xl shadow-slate-200/50 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
+    <SubPageLayout
+      category="academics"
+      title="Course Curriculum"
+      subtitle="Semester-Wise GTU Syllabus & Academic Curriculum for All Engineering Programs"
+      activeItemLabel="Course Curriculum"
+    >
+      <div className="text-slate-800 font-sans">
+        {/* MAIN OUTER CANVAS CARD */}
+        <div className="py-2">
+          
+          {/* Main White Card matching reference layout */}
+          <div className="bg-white rounded-[28px] sm:rounded-[36px] border border-slate-200/90 shadow-xl shadow-slate-200/50 p-4 sm:p-6 lg:p-8 relative overflow-hidden">
           
           {/* Subtle Background Pattern Dots */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:16px_16px] opacity-30 pointer-events-none" />
@@ -357,6 +330,7 @@ export default function CurriculumPage() {
         </div>
       )}
 
-    </div>
+      </div>
+    </SubPageLayout>
   );
 }

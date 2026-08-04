@@ -253,7 +253,7 @@ export default function NewsAnnouncementsPage() {
     <SubPageLayout
       title="News & Announcements"
       subtitle="Latest Campus Updates, Academic News, and Student Achievements"
-      category="about"
+      category="academics"
       activeItemLabel="News & Announcements"
     >
       <div className="max-w-7xl mx-auto py-2">

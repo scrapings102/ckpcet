@@ -1194,59 +1194,96 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
 
     if (node.children && node.children.length > 0) {
       if (sectionName === 'About Us' || sectionName === 'About us') {
-        if (node.label === 'Academics') {
-          if (
-            cleanPath.startsWith('academics') ||
-            cleanPath.includes('program') ||
-            cleanPath.includes('admission') ||
-            cleanPath.includes('curriculum') ||
-            cleanPath.includes('time-table') ||
-            cleanPath.includes('timetables') ||
-            cleanPath.includes('notice-board') ||
-            cleanPath.includes('announcement') ||
-            cleanPath.includes('innovations') ||
-            cleanPath.includes('admin-staff')
-          ) {
+        if (node.label === 'Institute') {
+          const instituteRoutes = [
+            'about/overview',
+            'about/vision-mission',
+            'about/founder',
+            'about/trustees',
+            'about/administrative-setup',
+            'about/employee-service-rules',
+            'about/principals-message',
+            'about/reach-us',
+            'about/campus-map',
+            'about/general-information',
+            'about/directors-message',
+            'about/hods-message',
+            'about/trust',
+            'about/mission',
+          ];
+          if (instituteRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
-        if (node.label === 'Institute') {
-          if (
-            cleanPath.startsWith('about-us') ||
-            cleanPath.startsWith('about/overview') ||
-            cleanPath.includes('profile') ||
-            cleanPath.includes('vision') ||
-            cleanPath.includes('mission') ||
-            cleanPath.includes('founder') ||
-            cleanPath.includes('trust') ||
-            cleanPath.includes('director') ||
-            cleanPath.includes('principal') ||
-            cleanPath.includes('reach-us') ||
-            cleanPath.includes('campus-map') ||
-            cleanPath.includes('administrative-setup') ||
-            cleanPath.includes('employee-service') ||
-            cleanPath.includes('general-information')
-          ) {
+        if (node.label === 'Academics') {
+          const academicRoutes = [
+            'academics',
+            'about/academics',
+            'programs',
+            'programs-offered',
+            'admission',
+            'curriculum',
+            'course-curriculum',
+            'time-tables',
+            'timetables',
+            'notice-board',
+            'news-announcements',
+            'announcements',
+            'innovations',
+            'innovations-teaching',
+            'admin-staff',
+          ];
+          if (academicRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
         if (node.label === 'Committees') {
-          if (cleanPath.includes('committee') || cleanPath.startsWith('about/committees')) {
+          const committeeRoutes = [
+            'about/committees',
+            'about-us/committees',
+            'committees',
+          ];
+          if (committeeRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
         if (node.label === 'Affiliations') {
-          if (cleanPath.includes('affiliation') || cleanPath.includes('aicte-approval') || cleanPath.includes('disclosure')) {
+          const affiliationRoutes = [
+            'about/affiliations',
+            'about/affiliations-approvals',
+            'about/aicte',
+            'about/aicte-approval',
+            'about/aicte-essentials',
+            'affiliations',
+            'affiliations-approvals',
+            'affiliations-and-approvals',
+            'aicte',
+            'aicte-approval',
+            'aicte-essentials',
+          ];
+          if (affiliationRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
         if (node.label === 'NIRF') {
-          if (cleanPath.includes('nirf')) {
+          const nirfRoutes = [
+            'about/nirf',
+            'about/nirf-rankings',
+            'about-us/nirf',
+            'nirf',
+          ];
+          if (nirfRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
         if (node.label === 'Audit Reports') {
-          if (cleanPath.includes('audit')) {
+          const auditRoutes = [
+            'about/audit-reports',
+            'about/financial-audits',
+            'about-us/audit-reports',
+            'audit-reports',
+          ];
+          if (auditRoutes.some((route) => cleanPath.startsWith(route))) {
             return node.children;
           }
         }
