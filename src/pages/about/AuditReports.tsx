@@ -23,7 +23,7 @@ const AUDIT_REPORTS: AuditReport[] = [
   {
     year: "2024-25",
     title: "Financial Audit Report FY 2024-25",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/1OK3dFI2yBUxFVSVIxBRBO0jzW2DsAt-p/view?usp=sharing",
     isLatest: true,
     status: "Audited & Verified",
     description: "Fully verified financial statement, statement of accounts, income & expenditure balance sheets, and resource allocation audits for FY 2024-25."
@@ -31,49 +31,49 @@ const AUDIT_REPORTS: AuditReport[] = [
   {
     year: "2023-24",
     title: "Financial Audit Report FY 2023-24",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/1upRfQLbjp9391cqT04FoBLkzShf_prf2/view?usp=sharing",
     status: "Audited & Verified",
     description: "Audited financial statement, income/expenditure logs, capital works audits, and salary register compliance for FY 2023-24."
   },
   {
     year: "2022-23",
     title: "Financial Audit Report FY 2022-23",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/112tLh1ny15zaN_kbdprdQzCpTagVr4dG/view?usp=sharing",
     status: "Audited & Verified",
     description: "Verified balance sheets, development fund distributions, and recurring operations statements of account."
   },
   {
     year: "2021-22",
     title: "Financial Audit Report FY 2021-22",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/1tdGHN67Y8qqxKR7tduM9V_PYuYUYObyx/view?usp=sharing",
     status: "Audited & Verified",
     description: "Comprehensive capital and operational audits verified by certified public accountants and the parent trust."
   },
   {
     year: "2020-21",
     title: "Financial Audit Report FY 2020-21",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/1g7IaMVGn2flibEFRCrTDIy-O0AvsSfrU/view?usp=sharing",
     status: "Audited & Verified",
     description: "Official financial statements, balance sheets, and statutory auditing certificates for the fiscal year 2020-21."
   },
   {
     year: "2019-20",
     title: "Financial Audit Report FY 2019-20",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/11TCIH1fN8k8DvNjZsguPACvjiJXAg5jA/view?usp=sharing",
     status: "Audited & Verified",
     description: "Audited accounts outlining capital equipment depreciation, lab procurement investments, and recurring fund registries."
   },
   {
     year: "2018-19",
     title: "Financial Audit Report FY 2018-19",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/1dzpbqAsRSQL_sFm0qZ8YYMSRoajaoXT-/view?usp=sharing",
     status: "Audited & Verified",
     description: "Year-end financial audits covering building fund additions, instructional hardware acquisitions, and library funding."
   },
   {
     year: "2017-18",
     title: "Financial Audit Report FY 2017-18",
-    driveUrl: "https://drive.google.com/file/d/1Frn0EO9bYzaNbEdsKgJsdsvjsKhHMLZc/view",
+    driveUrl: "https://drive.google.com/file/d/12CmjYiJyCcOqNSzKhNIdIoIDLr-3fQ3a/view?usp=sharing",
     status: "Audited & Verified",
     description: "Verified financial disclosures and chartered accountant certification logs for the fiscal year 2017-18."
   }

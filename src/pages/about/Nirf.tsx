@@ -24,75 +24,61 @@ interface NirfReport {
 
 const NIRF_REPORTS: NirfReport[] = [
   {
-    year: "2025-26",
-    title: "NIRF Report 2025-26 (Discipline: Engineering)",
+    year: "2025-26 (Part 2)",
+    title: "NIRF Report 2025-26 Part 2 (Discipline: Engineering)",
     isLatest: true,
-    driveUrl: "https://drive.google.com/file/d/1UMoMPdtN1ZZpmJFIiNcKYIa7Eiw0ZZo6/view",
+    driveUrl: "https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view",
     status: "Published",
     description: "Full institutional data report capturing research publications, patent approvals, student graduation outcomes, and infrastructure expansion for AY 2025-26."
   },
   {
-    year: "2024-25",
-    title: "NIRF Report 2024-25 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/11TLEfSwlVGgMJJqvjA25by7QPdJoCdFp/view",
+    year: "2025-26 (Part 1)",
+    title: "NIRF Report 2025-26 Part 1 (Discipline: Engineering)",
+    driveUrl: "https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view",
+    status: "Published",
+    description: "Primary institutional parameters and faculty details for AY 2025-26 submission."
+  },
+  {
+    year: "2024-25 (Part 2)",
+    title: "NIRF Report 2024-25 Part 2 (Discipline: Engineering)",
+    driveUrl: "https://drive.google.com/file/d/1s34DoLGe3ndYobkMh-XP20Nt0TB1XNAl/view",
     status: "Published",
     description: "Comprehensive submission report outlining student-faculty ratio, financial resource utilization, and student outreach milestones."
   },
   {
+    year: "2024-25 (Part 1)",
+    title: "NIRF Report 2024-25 Part 1 (Discipline: Engineering)",
+    driveUrl: "https://drive.google.com/file/d/12wLD0JzxWgWjnHYQT7lG4_iNARV_Slfd/view",
+    status: "Published",
+    description: "Primary institutional data submission capturing engineering department statistics."
+  },
+  {
     year: "2023-24",
     title: "NIRF Report 2023-24 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/1hltuEN9auCKpFlGS0_bCFTeenWLEWCbA/view",
+    driveUrl: "https://drive.google.com/file/d/1Jqx7eRyMm0oveEoO0vHTvo9TyZP3F77I/view",
     status: "Published",
     description: "Year-wise diagnostic parameters including graduation rates, median placements salary figures, and active doctoral program details."
   },
   {
     year: "2022-23",
     title: "NIRF Report 2022-23 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/14bJUtF4XlDYmZJm3NeLmGlegGnuWB_aI/view",
+    driveUrl: "https://drive.google.com/file/d/1KA8TYTjnXbsthcHELe70u0EVjxSf9x43/view",
     status: "Published",
     description: "Detailed submission parameters highlighting teaching, learning & resources, research, and collaborative professional practices."
   },
   {
     year: "2021-22",
     title: "NIRF Report 2021-22 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/1GguvnvfxuFj0hHyLvvHzGbRvABeQrxTB/view",
+    driveUrl: "https://drive.google.com/file/d/16VO8AjT7sRSlUfBT95zJNXlmlAClQMvY/view",
     status: "Published",
     description: "Full institutional data disclosure capturing active industry collaborations, faculty citations, and campus accessibility standards."
   },
   {
     year: "2020-21",
     title: "NIRF Report 2020-21 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/1yJikY8rvJHi38w6rlh2Gq2QiFSzl0gPX/view",
+    driveUrl: "https://drive.google.com/file/d/1Egim4WDE47URUWNrktXrBDwCTSRkK4zV/view",
     status: "Published",
     description: "GTU affiliated statistics covering engineering intake capabilities, student enrollment diversity, and regional development initiatives."
-  },
-  {
-    year: "2019-20",
-    title: "NIRF Report 2019-20 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/1Vzqi_bqQ7HhQC39_9zruU-ffP0gXwxet/view",
-    status: "Published",
-    description: "Official institutional data submission verifying physical capital layout, research output, and executive development outcomes."
-  },
-  {
-    year: "2018-19",
-    title: "NIRF Report 2018-19 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/0B1N9snDSA9nIdk9Gc0Z4STR4Z3Z1dFJPMEJJaFk2VWl1Rmdj/view",
-    status: "Published",
-    description: "Primary statistical submission outlining instructional terminal counts, library books acquisition, and safety compliance policies."
-  },
-  {
-    year: "2017-18",
-    title: "NIRF Report 2017-18 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/0B1N9snDSA9nIdDdXVlBveU51Qm9KZ0NoNHAxYnRtc2g0Tk5F/view",
-    status: "Published",
-    description: "Historical academic resource audit report charting student placements, post-graduate intake, and research publications."
-  },
-  {
-    year: "2016-17",
-    title: "NIRF Report 2016-17 (Discipline: Engineering)",
-    driveUrl: "https://drive.google.com/file/d/0B1N9snDSA9nIeUx3Q0I2eUhPcWM/view",
-    status: "Published",
-    description: "Initial ranking framework data compilation charting early campus milestones, computer terminals, and laboratory setup."
   }
 ];
 

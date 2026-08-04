@@ -67,6 +67,11 @@ const INSTITUTE_REAL_ROUTES: Record<string, string> = {
   'The Principal': 'about/principals-message',
   'Reach Us': 'about/reach-us',
   'Campus Map': 'about/campus-map',
+  'Committees': 'about/committees',
+  'Affiliations': 'about/affiliations',
+  'NIRF': 'about/nirf',
+  'NIRF Report': 'about/nirf',
+  'Audit Reports': 'about/audit-reports',
 };
 
 Object.entries(DEPT_REAL_ROUTES).forEach(([deptLabel, route]) => {
@@ -105,7 +110,7 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     if (label === 'Mandatory Disclosure') return 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view';
     if (label === 'AICTE Approval') return 'about/aicte-approval';
   }
-  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us'))) {
+  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report'))) {
     const NIRF_DRIVE_MAP: Record<string, string> = {
       'Report 2025-26-2': 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view',
       'Report 2025-26-1': 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view',
@@ -121,11 +126,14 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
   }
   if (parentLabel === 'Audit Reports' || (!parentLabel && (label.startsWith('Financial Audit ') || label === 'Audit Reports'))) {
     const AUDIT_DRIVE_MAP: Record<string, string> = {
-      'Financial Audit 2023-24': 'https://drive.google.com/file/d/1y67R9bI8lI5I1o_2eA1m0p54lI3k3fL1/view',
-      'Financial Audit 2022-23': 'https://drive.google.com/file/d/1L2K5x7aYQ2V8uY0eA2M2p54lI3k3fL2/view',
-      'Financial Audit 2021-22': 'https://drive.google.com/file/d/1M3L6y8bZR3W9vZ1fB3N3q65mJ4l4gM3/view',
-      'Financial Audit 2020-21': 'https://drive.google.com/file/d/1N4M7z9caS4X0wA2gC4O4r76nK5m5hN4/view',
-      'Financial Audit 2019-20': 'https://drive.google.com/file/d/1O5N8a0dbT5Y1xB3hD5P5s87oL6n6iO5/view',
+      'Financial Audit 2024-25': 'https://drive.google.com/file/d/1OK3dFI2yBUxFVSVIxBRBO0jzW2DsAt-p/view?usp=sharing',
+      'Financial Audit 2023-24': 'https://drive.google.com/file/d/1upRfQLbjp9391cqT04FoBLkzShf_prf2/view?usp=sharing',
+      'Financial Audit 2022-23': 'https://drive.google.com/file/d/112tLh1ny15zaN_kbdprdQzCpTagVr4dG/view?usp=sharing',
+      'Financial Audit 2021-22': 'https://drive.google.com/file/d/1tdGHN67Y8qqxKR7tduM9V_PYuYUYObyx/view?usp=sharing',
+      'Financial Audit 2020-21': 'https://drive.google.com/file/d/1g7IaMVGn2flibEFRCrTDIy-O0AvsSfrU/view?usp=sharing',
+      'Financial Audit 2019-20': 'https://drive.google.com/file/d/11TCIH1fN8k8DvNjZsguPACvjiJXAg5jA/view?usp=sharing',
+      'Financial Audit 2018-19': 'https://drive.google.com/file/d/1dzpbqAsRSQL_sFm0qZ8YYMSRoajaoXT-/view?usp=sharing',
+      'Financial Audit 2017-18': 'https://drive.google.com/file/d/12CmjYiJyCcOqNSzKhNIdIoIDLr-3fQ3a/view?usp=sharing',
     };
     if (AUDIT_DRIVE_MAP[label]) return AUDIT_DRIVE_MAP[label];
     return 'about/audit-reports';
@@ -479,13 +487,13 @@ interface NavTreeItem {
 const ABOUT_US_TREE: NavTreeItem[] = [
   { label: 'Institute', children: ['Profile', 'Vision And Mission', 'The Founder', 'Governing Body', 'Administrative Setup', 'Employee Service Rules', 'The Principal', 'Reach Us', 'Campus Map'] },
   { label: 'Academics', children: ['General Information', 'Programs Offered', 'Admission', 'Notice Board', 'News & Announcements', 'Course Curriculum', 'Time Tables', 'Admin Staff', 'Innovations in Teaching & Learning'] },
-  { label: 'Committees', children: ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF (Committee)', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'] },
+  { label: 'Committees', children: ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'] },
   { label: 'Deans and Faculty In-charges' },
   { label: 'MOUs' },
   { label: 'Grants' },
   { label: 'Affiliations', children: ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'] },
-  { label: 'NIRF', children: ['Report 2025-26-2', 'Report 2025-26-1', 'Report 2024-25-2', 'Report 2024-25-1', 'Report 2023-24', 'Report 2022-23', 'Report 2021-22', 'Report 2020-21', 'NIRF Contact Us'] },
-  { label: 'Audit Reports', children: ['Financial Audit 2024-25', 'Financial Audit 2023-24', 'Financial Audit 2022-23', 'Financial Audit 2021-22', 'Financial Audit 2020-21', 'Financial Audit 2019-20', 'Financial Audit 2018-19', 'Financial Audit 2017-18'] },
+  { label: 'NIRF', children: ['NIRF Report'] },
+  { label: 'Audit Reports', children: ['Audit Reports'] },
   { label: 'Aicte Essentials', children: ['AICTE Essentials'] },
 ];
 
