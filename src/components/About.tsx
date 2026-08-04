@@ -91,7 +91,7 @@ export const AboutSection = () => {
             {/* Action Buttons */}
             <div className="flex flex-wrap items-center gap-4">
               <button 
-                onClick={() => navigate('/about-us/profile')}
+                onClick={() => navigate('/about/overview')}
                 className="px-7 py-3.5 bg-[#00509d] text-white hover:bg-[#0B2545] rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2.5 group shadow-lg shadow-[#00509d]/20 cursor-pointer select-none active:scale-95"
               >
                 <span>Read Institute Profile</span>
@@ -99,7 +99,7 @@ export const AboutSection = () => {
               </button>
 
               <button 
-                onClick={() => navigate('/about-us/vision-and-mission')}
+                onClick={() => navigate('/about/vision-mission')}
                 className="px-6 py-3.5 bg-white text-[#0B2545] border border-slate-200 hover:border-[#00509d] rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-slate-50 transition-all flex items-center gap-2 cursor-pointer select-none active:scale-95"
               >
                 <Sparkles size={14} className="text-[#E5B224]" />

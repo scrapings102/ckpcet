@@ -113,6 +113,8 @@ Object.entries(INSTITUTE_REAL_ROUTES).forEach(([label, route]) => {
   }
   keyToHashSegment[`Institute > ${label}`] = route;
   keyToHashSegment[`Academics > ${label}`] = route;
+  keyToHashSegment[`About Us > ${label}`] = route;
+  keyToHashSegment[`About us > ${label}`] = route;
 });
 
 export function resolveNavSegment(label: string, parentLabel?: string | null, currentPath?: string): string | undefined {

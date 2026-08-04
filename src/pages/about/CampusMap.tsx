@@ -9,7 +9,6 @@ import {
   Home, 
   Bus, 
   Train, 
-  Plane, 
   CheckCircle2, 
   Clock, 
   ShieldCheck,
@@ -84,12 +83,6 @@ export default function CampusMap() {
   ];
 
   const travelGuides = [
-    {
-      mode: "By Air (Surat Airport)",
-      icon: Plane,
-      time: "10-12 Mins (~6 km)",
-      detail: "Surat International Airport (STV) is located just 6 km away along Surat-Dumas Road. Taxis and auto-rickshaws are readily available right outside the terminal."
-    },
     {
       mode: "By Train (Surat Railway Station)",
       icon: Train,
@@ -284,10 +277,10 @@ export default function CampusMap() {
         <div className="space-y-6">
           <div className="border-b border-slate-200 pb-3">
             <h3 className="font-serif font-bold text-xl sm:text-2xl text-slate-900">How to Reach the Campus</h3>
-            <p className="text-xs sm:text-sm text-slate-600">Excellent connectivity from Surat airport, railway junction, and city bus transit hubs.</p>
+            <p className="text-xs sm:text-sm text-slate-600">Convenient connectivity from Surat railway junction and city bus transit hubs.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6">
             {travelGuides.map((guide, idx) => {
               const GuideIcon = guide.icon;
               return (
