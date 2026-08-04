@@ -279,8 +279,11 @@ export default function App() {
 
               {/* Committees, Affiliations, NIRF, and Audit Reports Routes */}
               <Route path="/about/committees" element={<CommitteesPage />} />
+              <Route path="/about/committees/:slug" element={<CommitteesPage />} />
               <Route path="/about-us/committees" element={<CommitteesPage />} />
+              <Route path="/about-us/committees/:slug" element={<CommitteesPage />} />
               <Route path="/committees" element={<CommitteesPage />} />
+              <Route path="/committees/:slug" element={<CommitteesPage />} />
               
               <Route path="/about/affiliations" element={<AffiliationsPage />} />
               <Route path="/about-us/affiliations" element={<AffiliationsPage />} />

@@ -98,17 +98,36 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
       'ABC ID Committee': 'abc-id'
     };
     const slug = COMMITTEE_SLUGS[label] || label.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-').replace(/[^\w-]/g, '');
-    return `about/committees#${slug}`;
+    return `about/committees/${slug}`;
   }
   if (parentLabel === 'Affiliations' || (!parentLabel && ['Gujarat Technological University', 'Mandatory Disclosure', 'AICTE Approval'].includes(label))) {
-    if (label === 'Gujarat Technological University') return 'about/affiliations#gtu';
-    if (label === 'Mandatory Disclosure') return 'about/affiliations#mandatory-disclosure';
+    if (label === 'Gujarat Technological University') return 'https://www.gtu.ac.in/';
+    if (label === 'Mandatory Disclosure') return 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view';
     if (label === 'AICTE Approval') return 'about/aicte-approval';
   }
-  if (parentLabel === 'NIRF Reports' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us'))) {
+  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us'))) {
+    const NIRF_DRIVE_MAP: Record<string, string> = {
+      'Report 2025-26-2': 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view',
+      'Report 2025-26-1': 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view',
+      'Report 2024-25-2': 'https://drive.google.com/file/d/1s34DoLGe3ndYobkMh-XP20Nt0TB1XNAl/view',
+      'Report 2024-25-1': 'https://drive.google.com/file/d/12wLD0JzxWgWjnHYQT7lG4_iNARV_Slfd/view',
+      'Report 2023-24': 'https://drive.google.com/file/d/1Jqx7eRyMm0oveEoO0vHTvo9TyZP3F77I/view',
+      'Report 2022-23': 'https://drive.google.com/file/d/1KA8TYTjnXbsthcHELe70u0EVjxSf9x43/view',
+      'Report 2021-22': 'https://drive.google.com/file/d/16VO8AjT7sRSlUfBT95zJNXlmlAClQMvY/view',
+      'Report 2020-21': 'https://drive.google.com/file/d/1Egim4WDE47URUWNrktXrBDwCTSRkK4zV/view',
+    };
+    if (NIRF_DRIVE_MAP[label]) return NIRF_DRIVE_MAP[label];
     return 'about/nirf';
   }
-  if (parentLabel === 'Audit Reports' || (!parentLabel && label.startsWith('Financial Audit '))) {
+  if (parentLabel === 'Audit Reports' || (!parentLabel && (label.startsWith('Financial Audit ') || label === 'Audit Reports'))) {
+    const AUDIT_DRIVE_MAP: Record<string, string> = {
+      'Financial Audit 2023-24': 'https://drive.google.com/file/d/1y67R9bI8lI5I1o_2eA1m0p54lI3k3fL1/view',
+      'Financial Audit 2022-23': 'https://drive.google.com/file/d/1L2K5x7aYQ2V8uY0eA2M2p54lI3k3fL2/view',
+      'Financial Audit 2021-22': 'https://drive.google.com/file/d/1M3L6y8bZR3W9vZ1fB3N3q65mJ4l4gM3/view',
+      'Financial Audit 2020-21': 'https://drive.google.com/file/d/1N4M7z9caS4X0wA2gC4O4r76nK5m5hN4/view',
+      'Financial Audit 2019-20': 'https://drive.google.com/file/d/1O5N8a0dbT5Y1xB3hD5P5s87oL6n6iO5/view',
+    };
+    if (AUDIT_DRIVE_MAP[label]) return AUDIT_DRIVE_MAP[label];
     return 'about/audit-reports';
   }
 
@@ -668,7 +687,13 @@ function NavItemDesktop({ item, isActive, onMouseEnter, onMouseLeave, onToggle }
                         onNavigate={(label, parentLabel) => {
                           onMouseLeave();
                           const segment = resolveNavSegment(label, parentLabel, location.pathname);
-                          if (segment) navigate(`/${segment}`);
+                          if (segment) {
+                            if (segment.startsWith('http://') || segment.startsWith('https://')) {
+                              window.open(segment, '_blank', 'noopener,noreferrer');
+                            } else {
+                              navigate(`/${segment}`);
+                            }
+                          }
                         }}
                       />
                     ) : (
@@ -689,7 +714,13 @@ function NavItemDesktop({ item, isActive, onMouseEnter, onMouseLeave, onToggle }
                                   onClick={() => {
                                     onMouseLeave();
                                     const segment = resolveNavSegment(subItemName, col.title, location.pathname);
-                                    if (segment) navigate(`/${segment}`);
+                                    if (segment) {
+                                      if (segment.startsWith('http://') || segment.startsWith('https://')) {
+                                        window.open(segment, '_blank', 'noopener,noreferrer');
+                                      } else {
+                                        navigate(`/${segment}`);
+                                      }
+                                    }
                                   }}
                                   className="group/menu-item text-left flex flex-col gap-0.5 py-1.5 px-3 -mx-3 rounded-xl hover:bg-white/10 border border-transparent hover:border-white/15 transition-all duration-200 w-full cursor-pointer"
                                 >
@@ -981,7 +1012,14 @@ function BottomNavItem({
                     key={subItem}
                     onClick={() => {
                       const segment = resolveNavSegment(subItem, item.name, location.pathname);
-                      if (segment) { navigate(`/${segment}`); setIsOpen(false); }
+                      if (segment) {
+                        if (segment.startsWith('http://') || segment.startsWith('https://')) {
+                          window.open(segment, '_blank', 'noopener,noreferrer');
+                        } else {
+                          navigate(`/${segment}`);
+                        }
+                        setIsOpen(false);
+                      }
                     }}
                     className="group/item flex items-center justify-between px-2.5 py-1.5 rounded-xl text-left text-white/90 hover:bg-white/10 border border-transparent hover:border-white/15 transition-all duration-200 cursor-pointer w-full hover:scale-[1.02] active:scale-[0.98]"
                   >
@@ -1074,6 +1112,11 @@ const getShortName = (name: string): string => {
     'Founder': 'Founder', 'About Trust': 'Trust', 'Trustee': 'Trustees',
     'Director\'s Message': 'Director', 'Principal\'s Message': 'Principal', 'HOD\'s Message': 'HOD',
     'Computer Engineering': 'Computer', 'Civil Engineering': 'Civil', 'Electrical Engineering': 'Electrical', 'Mechanical Engineering': 'Mechanical', 'Electronics and Communication Engineering': 'ECE', 'Information Technology': 'IT', 'Applied Science and Humanities': 'AS&H', 'AIML': 'AIML',
+    'Academic Council': 'Academic', 'Co-Curricular Activities': 'Co-Curricular', 'Finance': 'Finance',
+    'Innovation Council': 'Innovation', 'Magazine': 'Magazine', 'NIRF': 'NIRF',
+    'NSS Sankul': 'NSS', 'Purchase/Equipment': 'Purchase', 'Timetable': 'Timetable',
+    'Nasha Mukti Hostel Committee': 'Nasha Mukti', 'ABC ID Committee': 'ABC ID',
+    'Gujarat Technological University': 'GTU', 'AICTE Approval': 'AICTE', 'Mandatory Disclosure': 'Disclosure',
     'Anti-Ragging Committee': 'Anti-Ragging', 'ST-SC Cell': 'ST-SC',
     'Sexual Harassment Committee': 'POSH Cell',
     'About IQAC': 'About IQAC', 'IQAC Objectives': 'Objectives', 'Minutes & ATR': 'Minutes',
@@ -1082,7 +1125,7 @@ const getShortName = (name: string): string => {
     'Classrooms': 'Classrooms', 'Library': 'Library',
     'Inter-College Achievements': 'Achievements', 'Competitions': 'Comps',
     'Gallery': 'Gallery', 'Media Appreciation': 'Media',
-    'News': 'News', 'Events': 'Events', 'Achievements': 'Rankers',
+    'News': 'News', 'Events': 'Events',
     'News & Events': 'News',
     'Campus Life': 'Campus', 'Faculty': 'Faculty', 'Admissions': 'Admissions',
     'General Information': 'Gen Info',
@@ -1438,7 +1481,15 @@ function BottomScrollNav({ activeSection, setActiveSection, onItemClick }: NavPr
                       icon={SubIcon}
                       isActive={isActive}
                       layoutPrefix="subpage"
-                      onClick={() => { if (segment) navigate(`/${segment}`); }}
+                      onClick={() => {
+                        if (segment) {
+                          if (segment.startsWith('http://') || segment.startsWith('https://')) {
+                            window.open(segment, '_blank', 'noopener,noreferrer');
+                          } else {
+                            navigate(`/${segment}`);
+                          }
+                        }
+                      }}
                     />
                   );
                 })}
@@ -1944,7 +1995,13 @@ function OverlayMenu({
   const goSub = (subItem: string, parentLabel?: string | null) => {
     const segment = resolveNavSegment(subItem, parentLabel, location.pathname);
     setMenuOpen(false);
-    if (segment) navigate(`/${segment}`);
+    if (segment) {
+      if (segment.startsWith('http://') || segment.startsWith('https://')) {
+        window.open(segment, '_blank', 'noopener,noreferrer');
+      } else {
+        navigate(`/${segment}`);
+      }
+    }
   };
 
   const panelLeftVariants = {

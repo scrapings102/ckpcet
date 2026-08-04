@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation, Link } from "react-router-dom";
 import { 
   Users, 
   ArrowLeft, 
@@ -14,11 +14,14 @@ import {
   ShoppingCart, 
   Clock, 
   Home, 
-  UserCheck 
+  UserCheck,
+  ChevronRight,
+  Building2,
+  CheckCircle2
 } from "lucide-react";
 import SubPageLayout from "../../components/SubPageLayout";
 
-interface Committee {
+export interface Committee {
   id: string;
   name: string;
   description: string;
@@ -27,7 +30,7 @@ interface Committee {
   members: Array<{ name: string; role: string }>;
 }
 
-const COMMITTEES_LIST: Committee[] = [
+export const COMMITTEES_LIST: Committee[] = [
   {
     id: "academic-council",
     name: "Academic Council",
@@ -222,31 +225,149 @@ const COMMITTEES_LIST: Committee[] = [
 ];
 
 export default function CommitteesPage() {
-  const location = useLocation();
+  const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Find committee if slug exists
+  const selectedCommittee = slug 
+    ? COMMITTEES_LIST.find(c => c.id === slug || c.id === slug.toLowerCase())
+    : null;
 
   useEffect(() => {
-    if (location.hash) {
-      const id = location.hash.substring(1);
-      const element = document.getElementById(id);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth", block: "center" });
-          // Highlight target briefly
-          element.classList.add("ring-4", "ring-[#00509d]/30");
-          setTimeout(() => {
-            element.classList.remove("ring-4", "ring-[#00509d]/30");
-          }, 2000);
-        }, 300);
-      }
-    }
-  }, [location.hash]);
+    window.scrollTo(0, 0);
+  }, [slug, location.pathname]);
 
+  // Render single committee view if slug matches
+  if (selectedCommittee) {
+    const Icon = selectedCommittee.icon || Users;
+
+    return (
+      <SubPageLayout
+        title={selectedCommittee.name}
+        subtitle={selectedCommittee.description}
+        category="committees"
+        activeItemLabel={selectedCommittee.name}
+      >
+        <div className="space-y-10">
+          {/* Top Switcher Bar for Committees */}
+          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">
+                Institutional Committees Directory:
+              </span>
+              <button
+                onClick={() => navigate('/about/committees')}
+                className="text-xs font-mono font-bold text-[#00509d] hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                <span>View All 12 Committees</span>
+                <ChevronRight size={12} />
+              </button>
+            </div>
+            
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {COMMITTEES_LIST.map((c) => {
+                const isActive = c.id === selectedCommittee.id;
+                return (
+                  <button
+                    key={c.id}
+                    onClick={() => navigate(`/about/committees/${c.id}`)}
+                    className={`px-3 py-1.5 rounded-xl font-sans text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                      isActive 
+                        ? 'bg-[#0B2545] text-white shadow-xs' 
+                        : 'bg-white text-slate-600 hover:bg-slate-200/70 border border-slate-200/60'
+                    }`}
+                  >
+                    {c.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Committee Card Details */}
+          <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-xs space-y-8">
+            <div className="flex items-center gap-4 border-b border-slate-100 pb-6">
+              <div className="w-14 h-14 rounded-2xl bg-[#0B2545]/10 flex items-center justify-center text-[#0B2545] shrink-0">
+                <Icon className="w-7 h-7" />
+              </div>
+              <div>
+                <span className="text-[10px] font-mono text-[#00509d] font-bold tracking-widest uppercase bg-[#00509d]/10 px-2.5 py-1 rounded-full inline-block mb-1">
+                  Standing Committee
+                </span>
+                <h2 className="font-sans font-bold text-2xl sm:text-3xl text-slate-800">
+                  {selectedCommittee.name}
+                </h2>
+              </div>
+            </div>
+
+            {/* Overview */}
+            <div className="space-y-2">
+              <h3 className="font-sans font-bold text-base text-slate-800 flex items-center gap-2">
+                <Building2 size={18} className="text-[#0B2545]" />
+                <span>Committee Overview</span>
+              </h3>
+              <p className="text-slate-700 font-sans text-sm sm:text-base leading-relaxed bg-slate-50 p-4 sm:p-5 rounded-xl border border-slate-100">
+                {selectedCommittee.description}
+              </p>
+            </div>
+
+            {/* Responsibilities */}
+            <div className="space-y-3">
+              <h3 className="font-sans font-bold text-base text-slate-800 flex items-center gap-2">
+                <CheckCircle2 size={18} className="text-[#00509d]" />
+                <span>Key Responsibilities & Scope</span>
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {selectedCommittee.keyResponsibilities.map((resp, idx) => (
+                  <div key={idx} className="bg-white border border-slate-200/80 p-4 rounded-xl space-y-2">
+                    <span className="w-6 h-6 rounded-full bg-[#00509d]/10 text-[#00509d] font-mono text-xs font-bold flex items-center justify-center">
+                      0{idx + 1}
+                    </span>
+                    <p className="text-slate-600 font-sans text-xs sm:text-sm leading-relaxed">
+                      {resp}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Members */}
+            <div className="space-y-4 pt-4 border-t border-slate-100">
+              <h3 className="font-sans font-bold text-base text-slate-800 flex items-center gap-2">
+                <Users size={18} className="text-[#0B2545]" />
+                <span>Committee Members & Convener</span>
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {selectedCommittee.members.map((mem, idx) => (
+                  <div key={idx} className="bg-slate-50 border border-slate-200/80 p-4 rounded-xl flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#0B2545] text-white font-mono font-bold text-xs flex items-center justify-center shrink-0">
+                      {mem.name.replace(/^(Dr\.|Prof\.|Shri|Mrs\.)\s*/, '').charAt(0)}
+                    </div>
+                    <div>
+                      <span className="font-sans font-bold text-slate-800 text-sm block leading-snug">
+                        {mem.name}
+                      </span>
+                      <span className="text-xs text-[#00509d] font-mono font-medium">
+                        {mem.role}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </SubPageLayout>
+    );
+  }
+
+  // Fallback: Overview list of all 12 committees
   return (
     <SubPageLayout
       title="Institutional Committees"
       subtitle="Standing committees overseeing administrative operations, student development, welfare, and quality compliance at CKPCET."
-      category="about"
+      category="committees"
       activeItemLabel="Committees"
     >
       <div className="space-y-12">
@@ -258,7 +379,7 @@ export default function CommitteesPage() {
                 Governance Structure
               </span>
               <p className="text-slate-700 font-sans text-sm sm:text-base leading-relaxed">
-                C. K. Pithawalla College of Engineering and Technology manages its continuous operations through a series of dedicated standing committees. These cells include experienced senior faculty members, trust management officers, and student representatives to ensure transparency, academic quality, safety, and operational excellence.
+                C. K. Pithawalla College of Engineering and Technology manages its continuous operations through a series of dedicated standing committees. Select any committee below to view its dedicated responsibilities and official members.
               </p>
             </div>
           </div>
@@ -271,17 +392,17 @@ export default function CommitteesPage() {
             return (
               <div
                 key={committee.id}
-                id={committee.id}
-                className="bg-white border border-slate-200/90 rounded-2xl p-6 hover:border-[#00509d]/40 hover:shadow-lg transition-all duration-300 flex flex-col justify-between scroll-mt-20 relative"
+                onClick={() => navigate(`/about/committees/${committee.id}`)}
+                className="bg-white border border-slate-200/90 rounded-2xl p-6 hover:border-[#00509d]/60 hover:shadow-lg transition-all duration-300 flex flex-col justify-between cursor-pointer group relative"
               >
                 <div className="space-y-4">
                   {/* Header */}
                   <div className="flex items-center gap-4 border-b border-slate-100 pb-3">
-                    <div className="w-12 h-12 rounded-xl bg-[#0B2545]/10 flex items-center justify-center text-[#0B2545] shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-[#0B2545]/10 group-hover:bg-[#0B2545] group-hover:text-white flex items-center justify-center text-[#0B2545] shrink-0 transition-colors">
                       <Icon className="w-6 h-6" />
                     </div>
                     <div>
-                      <h3 className="font-sans font-bold text-lg text-slate-800">
+                      <h3 className="font-sans font-bold text-lg text-slate-800 group-hover:text-[#00509d] transition-colors">
                         {committee.name}
                       </h3>
                       <span className="text-[10px] font-mono text-[#00509d] font-bold tracking-widest uppercase">
@@ -294,41 +415,11 @@ export default function CommitteesPage() {
                   <p className="text-slate-600 font-sans text-xs sm:text-sm leading-relaxed">
                     {committee.description}
                   </p>
-
-                  {/* Responsibilities */}
-                  <div className="space-y-2 pt-2">
-                    <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                      Core Responsibilities:
-                    </span>
-                    <ul className="space-y-1.5 text-xs text-slate-600 font-sans pl-1">
-                      {committee.keyResponsibilities.map((resp, idx) => (
-                        <li key={idx} className="flex gap-2 items-start">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#00509d] mt-1.5 shrink-0" />
-                          <span>{resp}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
                 </div>
 
-                {/* Committee Members list at bottom of card */}
-                <div className="mt-6 pt-4 border-t border-slate-100 bg-slate-50/70 p-3 rounded-xl">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono font-bold uppercase mb-2">
-                    <Users size={12} className="text-[#0B2545]" />
-                    <span>Committee Members:</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                    {committee.members.map((mem, idx) => (
-                      <div key={idx} className="bg-white border border-slate-100 p-2 rounded-lg">
-                        <span className="font-sans font-semibold text-slate-700 block leading-tight truncate">
-                          {mem.name}
-                        </span>
-                        <span className="text-[10px] text-slate-400 font-mono">
-                          {mem.role}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-mono font-bold text-[#00509d] group-hover:underline">
+                  <span>View Dedicated Page</span>
+                  <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             );

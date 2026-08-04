@@ -37,15 +37,20 @@ gsap.registerPlugin(ScrollTrigger);
 interface SubPageLayoutProps {
   title: string;
   subtitle?: string;
-  category: 'about' | 'courses' | 'committees' | 'iqac' | 'staff' | 'campus-life' | 'student-corner' | 'activities';
+  category: string;
   activeItemLabel: string;
   children: React.ReactNode;
 }
 
 const CATEGORY_NAMES: Record<string, string> = {
   about: 'About Us',
+  institute: 'Institute',
+  academics: 'Academics',
+  committees: 'Institutional Committees',
+  affiliations: 'Affiliations & Approvals',
+  nirf: 'NIRF Rankings',
+  'audit-reports': 'Audit Reports',
   courses: 'Courses',
-  committees: 'Committees',
   iqac: 'IQAC Cell',
   staff: 'Our Staff',
   'campus-life': 'Campus Life',
@@ -57,16 +62,6 @@ const CATEGORY_NAMES: Record<string, string> = {
 export const CATEGORY_LINKS: Record<string, { label: string; path: string }[]> = {
   about: [
     { label: 'Profile', path: '/about/overview' },
-    { label: 'General Information', path: '/about/general-information' },
-    { label: 'Programs Offered', path: '/academics/programs-offered' },
-    { label: 'Admission', path: '/academics/admission' },
-    { label: 'Innovations in Teaching & Learning', path: '/academics/innovations' },
-    { label: 'Admin Staff', path: '/academics/admin-staff' },
-    { label: 'Deans and Faculty In-charges', path: '/about/deans' },
-    { label: 'MOUs', path: '/about/mou' },
-    { label: 'Grants', path: '/about/grants' },
-    { label: 'Notice Board', path: '/academics/notice-board' },
-    { label: 'News & Announcements', path: '/academics/news-announcements' },
     { label: 'Vision And Mission', path: '/about/vision-mission' },
     { label: 'The Founder', path: '/about/founder' },
     { label: 'Governing Body', path: '/about/trustees' },
@@ -75,6 +70,61 @@ export const CATEGORY_LINKS: Record<string, { label: string; path: string }[]> =
     { label: 'The Principal', path: '/about/principals-message' },
     { label: 'Reach Us', path: '/about/reach-us' },
     { label: 'Campus Map', path: '/about/campus-map' },
+  ],
+  institute: [
+    { label: 'Profile', path: '/about/overview' },
+    { label: 'Vision And Mission', path: '/about/vision-mission' },
+    { label: 'The Founder', path: '/about/founder' },
+    { label: 'Governing Body', path: '/about/trustees' },
+    { label: 'Administrative Setup', path: '/about/administrative-setup' },
+    { label: 'Employee Service Rules', path: '/about/employee-service-rules' },
+    { label: 'The Principal', path: '/about/principals-message' },
+    { label: 'Reach Us', path: '/about/reach-us' },
+    { label: 'Campus Map', path: '/about/campus-map' },
+  ],
+  academics: [
+    { label: 'General Information', path: '/academics/general-information' },
+    { label: 'Programs Offered', path: '/academics/programs-offered' },
+    { label: 'Admission', path: '/academics/admission' },
+    { label: 'Notice Board', path: '/academics/notice-board' },
+    { label: 'News & Announcements', path: '/academics/news-announcements' },
+    { label: 'Course Curriculum', path: '/academics/curriculum' },
+    { label: 'Time Tables', path: '/academics/time-tables' },
+    { label: 'Admin Staff', path: '/academics/admin-staff' },
+    { label: 'Innovations in Teaching & Learning', path: '/academics/innovations' },
+  ],
+  committees: [
+    { label: 'Academic Council', path: '/about/committees/academic-council' },
+    { label: 'Co-Curricular Activities', path: '/about/committees/co-curricular' },
+    { label: 'Finance', path: '/about/committees/finance' },
+    { label: 'Innovation Council', path: '/about/committees/innovation-council' },
+    { label: 'Library', path: '/about/committees/library' },
+    { label: 'Magazine', path: '/about/committees/magazine' },
+    { label: 'NIRF (Committee)', path: '/about/committees/nirf' },
+    { label: 'NSS Sankul', path: '/about/committees/nss-sankul' },
+    { label: 'Purchase/Equipment', path: '/about/committees/purchase-equipment' },
+    { label: 'Timetable', path: '/about/committees/timetable' },
+    { label: 'Nasha Mukti Hostel Committee', path: '/about/committees/nasha-mukti' },
+    { label: 'ABC ID Committee', path: '/about/committees/abc-id' },
+  ],
+  affiliations: [
+    { label: 'Gujarat Technological University', path: 'https://www.gtu.ac.in/' },
+    { label: 'AICTE Approval', path: '/about/aicte-approval' },
+    { label: 'Mandatory Disclosure', path: 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view' },
+  ],
+  nirf: [
+    { label: 'Report 2025-26-2', path: 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view' },
+    { label: 'Report 2025-26-1', path: 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view' },
+    { label: 'Report 2024-25-2', path: 'https://drive.google.com/file/d/1s34DoLGe3ndYobkMh-XP20Nt0TB1XNAl/view' },
+    { label: 'Report 2024-25-1', path: 'https://drive.google.com/file/d/12wLD0JzxWgWjnHYQT7lG4_iNARV_Slfd/view' },
+    { label: 'Report 2023-24', path: 'https://drive.google.com/file/d/1Jqx7eRyMm0oveEoO0vHTvo9TyZP3F77I/view' },
+    { label: 'Report 2022-23', path: 'https://drive.google.com/file/d/1KA8TYTjnXbsthcHELe70u0EVjxSf9x43/view' },
+    { label: 'Report 2021-22', path: 'https://drive.google.com/file/d/16VO8AjT7sRSlUfBT95zJNXlmlAClQMvY/view' },
+    { label: 'Report 2020-21', path: 'https://drive.google.com/file/d/1Egim4WDE47URUWNrktXrBDwCTSRkK4zV/view' },
+    { label: 'NIRF Contact Us', path: '/about/nirf' },
+  ],
+  'audit-reports': [
+    { label: 'Audit Reports', path: '/about/audit-reports' },
   ],
   courses: [
     { label: 'Computer Engineering', path: '/departments/computer-engineering' },
@@ -85,11 +135,6 @@ export const CATEGORY_LINKS: Record<string, { label: string; path: string }[]> =
     { label: 'Electrical Engineering', path: '/departments/electrical-engineering' },
     { label: 'Electronics & Communication', path: '/departments/electronics-and-communication-engineering' },
     { label: 'Applied Science and Humanities', path: '/departments/applied-science' },
-  ],
-  committees: [
-    { label: 'Anti-Ragging Committee', path: '/committees/anti-ragging' },
-    { label: 'ST-SC Cell', path: '/committees/st-sc-cell' },
-    { label: 'Sexual Harassment Committee', path: '/committees/sexual-harassment' },
   ],
   iqac: [
     { label: 'About IQAC', path: '/iqac/about' },
