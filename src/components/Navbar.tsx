@@ -23,11 +23,38 @@ export const getSlug = (section: string, label: string): string => {
 
 // Dynamically construct keyToHashSegment
 export const keyToHashSegment: Record<string, string> = {};
+
+// Count leaf label occurrences across all navigation sections to detect collisions
+const leafLabelCounts: Record<string, number> = {};
 scrapedData.navigation_menu.forEach(sec => {
   sec.items.forEach(item => {
-    keyToHashSegment[item.label] = getSlug(sec.section, item.label);
+    leafLabelCounts[item.label] = (leafLabelCounts[item.label] || 0) + 1;
   });
 });
+
+scrapedData.navigation_menu.forEach(sec => {
+  sec.items.forEach(item => {
+    const slug = getSlug(sec.section, item.label);
+    keyToHashSegment[`${sec.section} > ${item.label}`] = slug;
+    // Only set bare label if unique across all navigation sections
+    if (leafLabelCounts[item.label] === 1) {
+      keyToHashSegment[item.label] = slug;
+    }
+  });
+});
+
+// Explicit parent-scoped composite mappings for NSS Sankul and other known duplicated labels
+keyToHashSegment['Committees > NSS Sankul'] = 'about/committees/nss';
+keyToHashSegment['About Us > Committees > NSS Sankul'] = 'about/committees/nss';
+keyToHashSegment['About Us > NSS Sankul'] = 'about/committees/nss';
+
+keyToHashSegment['Community > NSS Sankul'] = 'activities/community/nss';
+keyToHashSegment['Activities > Community > NSS Sankul'] = 'activities/community/nss';
+keyToHashSegment['Activities > NSS Sankul'] = 'activities/community/nss';
+
+keyToHashSegment['About T & P > Rules & Regulations'] = 't-and-p/about-t-and-p/rules-and-regulations';
+keyToHashSegment['T & P > Rules & Regulations'] = 't-and-p/about-t-and-p/rules-and-regulations';
+keyToHashSegment['Alumni > Rules & Regulations'] = 'alumni/rules-and-regulations';
 
 // Map each department's child labels to the parent department's real route
 const DEPT_REAL_ROUTES: Record<string, string> = {
@@ -81,13 +108,38 @@ Object.entries(DEPT_REAL_ROUTES).forEach(([deptLabel, route]) => {
 });
 
 Object.entries(INSTITUTE_REAL_ROUTES).forEach(([label, route]) => {
-  keyToHashSegment[label] = route;
+  if (leafLabelCounts[label] === 1 || !leafLabelCounts[label]) {
+    keyToHashSegment[label] = route;
+  }
   keyToHashSegment[`Institute > ${label}`] = route;
   keyToHashSegment[`Academics > ${label}`] = route;
 });
 
 export function resolveNavSegment(label: string, parentLabel?: string | null, currentPath?: string): string | undefined {
-  if (parentLabel === 'Committees' || (!parentLabel && ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'].includes(label))) {
+  // 1. Explicitly disambiguate NSS Sankul (used in Committees AND Community)
+  if (label === 'NSS Sankul') {
+    if (parentLabel === 'Community' || parentLabel === 'Activities' || currentPath?.startsWith('/activities')) {
+      return 'activities/community/nss';
+    }
+    if (parentLabel === 'Committees' || parentLabel === 'About Us' || parentLabel === 'About us' || currentPath?.startsWith('/about') || currentPath?.startsWith('/committees')) {
+      return 'about/committees/nss';
+    }
+    if (parentLabel === 'Community') return 'activities/community/nss';
+    return 'about/committees/nss';
+  }
+
+  // 2. Disambiguate Rules & Regulations (used in Alumni AND T & P)
+  if (label === 'Rules & Regulations') {
+    if (parentLabel === 'Alumni' || currentPath?.startsWith('/alumni')) {
+      return 'alumni/rules-and-regulations';
+    }
+    if (parentLabel === 'About T & P' || parentLabel === 'T & P' || currentPath?.startsWith('/t-and-p') || currentPath?.startsWith('/training')) {
+      return 't-and-p/about-t-and-p/rules-and-regulations';
+    }
+  }
+
+  // 3. Committees list
+  if (parentLabel === 'Committees' || (parentLabel === 'About Us' && ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'].includes(label))) {
     const COMMITTEE_SLUGS: Record<string, string> = {
       'Academic Council': 'academic-council',
       'Co-Curricular Activities': 'co-curricular',
@@ -96,7 +148,6 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
       'Library': 'library',
       'Magazine': 'magazine',
       'NIRF': 'nirf',
-      'NSS Sankul': 'nss',
       'Purchase/Equipment': 'purchase',
       'Timetable': 'timetable',
       'Nasha Mukti Hostel Committee': 'nmc',
@@ -105,11 +156,15 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     const slug = COMMITTEE_SLUGS[label] || label.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-').replace(/[^\w-]/g, '');
     return `about/committees/${slug}`;
   }
+
+  // 4. External and static affiliation links
   if (['Gujarat Technological University', 'Mandatory Disclosure', 'AICTE Approval'].includes(label)) {
     if (label === 'Gujarat Technological University') return 'https://www.gtu.ac.in/';
     if (label === 'Mandatory Disclosure') return 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view';
     if (label === 'AICTE Approval') return 'about/aicte-approval';
   }
+
+  // 5. NIRF Drive Reports
   if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report' || label === 'Contact Us') {
     const NIRF_DRIVE_MAP: Record<string, string> = {
       'Report 2025-26-2': 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view',
@@ -117,13 +172,15 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
       'Report 2024-25-2': 'https://drive.google.com/file/d/1s34DoLGe3ndYobkMh-XP20Nt0TB1XNAl/view',
       'Report 2024-25-1': 'https://drive.google.com/file/d/12wLD0JzxWgWjnHYQT7lG4_iNARV_Slfd/view',
       'Report 2023-24': 'https://drive.google.com/file/d/1Jqx7eRyMm0oveEoO0vHTvo9TyZP3F77I/view',
-      'Report 2022-23': 'https://drive.google.com/file/d/1KA8TYTjnXbsthcHELe70u0EVjxSf9x43/view',
+      'Report 2022-23': 'https://drive.google.com/file/d/1KA8TYTjnXbasthcHELe70u0EVjxSf9x43/view',
       'Report 2021-22': 'https://drive.google.com/file/d/16VO8AjT7sRSlUfBT95zJNXlmlAClQMvY/view',
       'Report 2020-21': 'https://drive.google.com/file/d/1Egim4WDE47URUWNrktXrBDwCTSRkK4zV/view',
     };
     if (NIRF_DRIVE_MAP[label]) return NIRF_DRIVE_MAP[label];
-    return 'about/nirf';
+    if (parentLabel === 'NIRF' || label === 'Contact Us') return 'about/nirf';
   }
+
+  // 6. Financial Audit Reports
   if (parentLabel === 'Audit Reports' || label.startsWith('Financial Audit ') || label === 'Audit Reports') {
     const AUDIT_DRIVE_MAP: Record<string, string> = {
       'Financial Audit 2024-25': 'https://drive.google.com/file/d/1OK3dFI2yBUxFVSVIxBRBO0jzW2DsAt-p/view?usp=sharing',
@@ -139,18 +196,27 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     return 'about/audit-reports';
   }
 
+  // 7. Composite parent > label lookups
   if (parentLabel && keyToHashSegment[`${parentLabel} > ${label}`]) {
     return keyToHashSegment[`${parentLabel} > ${label}`];
   }
+
+  // 8. Department real routes lookup
   if (parentLabel && DEPT_REAL_ROUTES[parentLabel]) {
     return DEPT_REAL_ROUTES[parentLabel];
   }
+
+  // 9. Institute real routes lookup
   if (INSTITUTE_REAL_ROUTES[label]) {
     return INSTITUTE_REAL_ROUTES[label];
   }
+
+  // 10. Department subpages fallback
   if (currentPath && currentPath.startsWith('/departments/') && ['About Department', 'Staff', 'Resources', 'Events', 'Achievements', 'Study Materials', 'Course Syllabus', 'Toppers', 'Student Projects'].includes(label)) {
     return currentPath.replace(/^\//, '');
   }
+
+  // 11. Bare key lookup fallback
   return keyToHashSegment[label];
 }
 
@@ -557,10 +623,11 @@ const NAV_TREES: Record<string, NavTreeItem[]> = {
 // one level deeper always rendered an empty submenu (the exact bug reported:
 // About Us -> Institute showed a bare "INSTITUTE" header with nothing below).
 const NODE_CHILDREN_MAP: Record<string, string[]> = {};
-Object.values(NAV_TREES).forEach((tree) => {
+Object.entries(NAV_TREES).forEach(([secName, tree]) => {
   tree.forEach((node) => {
     if (node.children && node.children.length > 0) {
       NODE_CHILDREN_MAP[node.label] = node.children;
+      NODE_CHILDREN_MAP[`${secName} > ${node.label}`] = node.children;
     }
   });
 });
@@ -1103,12 +1170,12 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
   const fullList = menuSubmaps[sectionName] || [];
   if (!tree) return fullList;
 
-  let matchedLabel: string | null = null;
+  let matchedOwnerNode: NavTreeItem | null = null;
 
   for (const node of tree) {
-    const topSegment = keyToHashSegment[node.label];
+    const topSegment = keyToHashSegment[`${sectionName} > ${node.label}`] || keyToHashSegment[node.label];
     if (topSegment && (topSegment === cleanPath || `/${topSegment}` === pathname)) {
-      matchedLabel = node.label;
+      matchedOwnerNode = node;
       break;
     }
     if (node.children) {
@@ -1117,18 +1184,15 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
         return seg && (seg === cleanPath || `/${seg}` === pathname);
       });
       if (childMatch) {
-        matchedLabel = childMatch;
+        matchedOwnerNode = node;
         break;
       }
     }
   }
 
-  if (!matchedLabel) return fullList;
+  if (!matchedOwnerNode) return fullList;
 
-  const ownerNode = tree.find((n) => n.label === matchedLabel || n.children?.includes(matchedLabel as string));
-  if (!ownerNode) return fullList;
-
-  return ownerNode.children && ownerNode.children.length > 0 ? ownerNode.children : [ownerNode.label];
+  return matchedOwnerNode.children && matchedOwnerNode.children.length > 0 ? matchedOwnerNode.children : [matchedOwnerNode.label];
 }
 
 const getShortName = (name: string): string => {
@@ -2287,17 +2351,23 @@ function OverlayMenu({
                 <motion.div variants={subitemVariants} className="font-sans font-bold text-[26px] md:text-[30px] uppercase tracking-tight border-b-2 border-[#1E293B] pb-3 mb-3">
                   {current}
                 </motion.div>
-                {(current && NAV_TREES[current]
-                  ? NAV_TREES[current].map(node => node.label)
-                  : current && NODE_CHILDREN_MAP[current]
-                    ? NODE_CHILDREN_MAP[current]
-                    : (menuSubmaps[current] || [])
-                ).map((subItem) => {
-                  const detail = dropdownDetails[subItem] || { desc: '', icon: Sparkles };
-                  const SubIcon = detail.icon;
-                  const node = current && NAV_TREES[current] ? NAV_TREES[current].find(n => n.label === subItem) : null;
-                  const hasChildren = !!node?.children?.length;
-                  return (
+                {(() => {
+                  const parent = stack.length >= 2 ? stack[stack.length - 2] : null;
+                  const children = (current && NAV_TREES[current]
+                    ? NAV_TREES[current].map(node => node.label)
+                    : current && parent && NODE_CHILDREN_MAP[`${parent} > ${current}`]
+                      ? NODE_CHILDREN_MAP[`${parent} > ${current}`]
+                      : current && NODE_CHILDREN_MAP[current]
+                        ? NODE_CHILDREN_MAP[current]
+                        : (menuSubmaps[current] || [])
+                  );
+                  return children.map((subItem) => {
+                    const detail = dropdownDetails[subItem] || { desc: '', icon: Sparkles };
+                    const SubIcon = detail.icon;
+                    const parentTree = current && NAV_TREES[current] ? NAV_TREES[current] : (parent && NAV_TREES[parent] ? NAV_TREES[parent] : null);
+                    const node = parentTree ? parentTree.find(n => n.label === subItem) : null;
+                    const hasChildren = !!node?.children?.length;
+                    return (
                     <motion.button
                       variants={subitemVariants}
                       key={subItem}
@@ -2320,7 +2390,8 @@ function OverlayMenu({
                       <ArrowRight size={13} className="ml-auto text-[#1D4ED8] opacity-0 -translate-x-2 group-hover/sub:opacity-100 group-hover/sub:translate-x-0 transition-all shrink-0" />
                     </motion.button>
                   );
-                })}
+                });
+              })()}
               </motion.div>
             )}
           </AnimatePresence>
