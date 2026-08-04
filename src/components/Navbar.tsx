@@ -87,6 +87,9 @@ Object.entries(INSTITUTE_REAL_ROUTES).forEach(([label, route]) => {
 });
 
 export function resolveNavSegment(label: string, parentLabel?: string | null, currentPath?: string): string | undefined {
+  if (label === 'View All Committees') {
+    return 'about/committees';
+  }
   if (parentLabel === 'Committees' || (!parentLabel && ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'].includes(label))) {
     const COMMITTEE_SLUGS: Record<string, string> = {
       'Academic Council': 'academic-council',
@@ -110,7 +113,7 @@ export function resolveNavSegment(label: string, parentLabel?: string | null, cu
     if (label === 'Mandatory Disclosure') return 'https://drive.google.com/file/d/1PZsx5TibGQkIE7Lrv6pmGngx1zId3YqL/view';
     if (label === 'AICTE Approval') return 'about/aicte-approval';
   }
-  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report' || (parentLabel === 'NIRF' && label === 'Contact Us')) {
+  if (parentLabel === 'NIRF Reports' || parentLabel === 'NIRF' || label.startsWith('Report ') || label === 'NIRF Contact Us' || label === 'NIRF Report' || label === 'Contact Us') {
     const NIRF_DRIVE_MAP: Record<string, string> = {
       'Report 2025-26-2': 'https://drive.google.com/file/d/1jGqP64awieyf7c5B1KynL9qyn4G2jIFB/view',
       'Report 2025-26-1': 'https://drive.google.com/file/d/1hZLCgPaP3Aw1yQMMgd47Zq7QD2KEPnBI/view',
@@ -1092,6 +1095,12 @@ function getSubpageDropdownItems(pathname: string, sectionName: string): string[
   if (cleanPath === 'about/aicte-essentials' || pathname === '/about/aicte-essentials') {
     return ['AICTE Essentials'];
   }
+  if (cleanPath === 'about/affiliations' || pathname === '/about/affiliations') {
+    return ['Gujarat Technological University', 'AICTE Approval', 'Mandatory Disclosure'];
+  }
+  if (cleanPath === 'about/committees' || pathname === '/about/committees' || cleanPath.startsWith('about/committees/')) {
+    return ['View All Committees', 'Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'];
+  }
 
   const tree = NAV_TREES[sectionName];
   const fullList = menuSubmaps[sectionName] || [];
@@ -1489,7 +1498,9 @@ function BottomScrollNav({ activeSection, setActiveSection, onItemClick }: NavPr
               <LayoutGroup id="subpage-nav">
                 {subItems.map((subItem) => {
                   const segment = resolveNavSegment(subItem, activeCategory, location.pathname);
-                  const isActive = segment ? location.pathname === `/${segment}` || location.pathname.endsWith(segment) : false;
+                  const cleanLoc = location.pathname.replace(/\/$/, '');
+                  const cleanSeg = segment ? segment.replace(/^\//, '').replace(/\/$/, '') : '';
+                  const isActive = Boolean(cleanSeg && !cleanSeg.startsWith('http://') && !cleanSeg.startsWith('https://') && cleanLoc === `/${cleanSeg}`);
                   const detail = dropdownDetails[subItem] || { icon: Sparkles };
                   const SubIcon = detail.icon;
                   return (
