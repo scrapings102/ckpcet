@@ -82,6 +82,36 @@ Object.entries(INSTITUTE_REAL_ROUTES).forEach(([label, route]) => {
 });
 
 export function resolveNavSegment(label: string, parentLabel?: string | null, currentPath?: string): string | undefined {
+  if (parentLabel === 'Committees' || (!parentLabel && ['Academic Council', 'Co-Curricular Activities', 'Finance', 'Innovation Council', 'Library', 'Magazine', 'NIRF', 'NSS Sankul', 'Purchase/Equipment', 'Timetable', 'Nasha Mukti Hostel Committee', 'ABC ID Committee'].includes(label))) {
+    const COMMITTEE_SLUGS: Record<string, string> = {
+      'Academic Council': 'academic-council',
+      'Co-Curricular Activities': 'co-curricular',
+      'Finance': 'finance',
+      'Innovation Council': 'innovation-council',
+      'Library': 'library',
+      'Magazine': 'magazine',
+      'NIRF': 'nirf',
+      'NSS Sankul': 'nss-sankul',
+      'Purchase/Equipment': 'purchase-equipment',
+      'Timetable': 'timetable',
+      'Nasha Mukti Hostel Committee': 'nasha-mukti',
+      'ABC ID Committee': 'abc-id'
+    };
+    const slug = COMMITTEE_SLUGS[label] || label.toLowerCase().replace(/ & /g, '-and-').replace(/ /g, '-').replace(/[^\w-]/g, '');
+    return `about/committees#${slug}`;
+  }
+  if (parentLabel === 'Affiliations' || (!parentLabel && ['Gujarat Technological University', 'Mandatory Disclosure', 'AICTE Approval'].includes(label))) {
+    if (label === 'Gujarat Technological University') return 'about/affiliations#gtu';
+    if (label === 'Mandatory Disclosure') return 'about/affiliations#mandatory-disclosure';
+    if (label === 'AICTE Approval') return 'about/aicte-approval';
+  }
+  if (parentLabel === 'NIRF Reports' || (!parentLabel && (label.startsWith('Report ') || label === 'NIRF Contact Us'))) {
+    return 'about/nirf';
+  }
+  if (parentLabel === 'Audit Reports' || (!parentLabel && label.startsWith('Financial Audit '))) {
+    return 'about/audit-reports';
+  }
+
   if (parentLabel && keyToHashSegment[`${parentLabel} > ${label}`]) {
     return keyToHashSegment[`${parentLabel} > ${label}`];
   }

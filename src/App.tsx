@@ -43,6 +43,10 @@ import NewsAnnouncementsPage from "./pages/academics/NewsAnnouncementsPage";
 import CurriculumPage from "./pages/academics/CurriculumPage";
 import TimeTablesPage from "./pages/academics/TimeTablesPage";
 import AicteApprovalPage from "./pages/about/AicteApprovalPage";
+import CommitteesPage from "./pages/about/Committees";
+import AffiliationsPage from "./pages/about/Affiliations";
+import NirfPage from "./pages/about/Nirf";
+import AuditReportsPage from "./pages/about/AuditReports";
 import DepartmentPage from "./pages/departments/DepartmentPage";
 import DynamicSubPage from "./pages/DynamicSubPage";
 
@@ -272,6 +276,25 @@ export default function App() {
               <Route path="/aicte" element={<AicteApprovalPage />} />
               <Route path="/aicte-essentials" element={<AicteApprovalPage />} />
               <Route path="/about/aicte-essentials" element={<AicteApprovalPage />} />
+
+              {/* Committees, Affiliations, NIRF, and Audit Reports Routes */}
+              <Route path="/about/committees" element={<CommitteesPage />} />
+              <Route path="/about-us/committees" element={<CommitteesPage />} />
+              <Route path="/committees" element={<CommitteesPage />} />
+              
+              <Route path="/about/affiliations" element={<AffiliationsPage />} />
+              <Route path="/about-us/affiliations" element={<AffiliationsPage />} />
+              <Route path="/affiliations" element={<AffiliationsPage />} />
+
+              <Route path="/about/nirf" element={<NirfPage />} />
+              <Route path="/about-us/nirf" element={<NirfPage />} />
+              <Route path="/about/nirf-rankings" element={<NirfPage />} />
+              <Route path="/nirf" element={<NirfPage />} />
+
+              <Route path="/about/audit-reports" element={<AuditReportsPage />} />
+              <Route path="/about-us/audit-reports" element={<AuditReportsPage />} />
+              <Route path="/about/financial-audits" element={<AuditReportsPage />} />
+              <Route path="/audit-reports" element={<AuditReportsPage />} />
               
               {/* Fallback path wildcard */}
               <Route path="*" element={<DynamicSubPage />} />
