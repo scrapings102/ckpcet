@@ -52,28 +52,6 @@ export default function CommitteesPage() {
         activeItemLabel={selectedCommittee.name}
       >
         <div className="space-y-8">
-          {/* Top Switcher Bar for Committees */}
-          <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-              {COMMITTEES_LIST.map((c) => {
-                const isActive = c.id === selectedCommittee.id;
-                return (
-                  <button
-                    key={c.id}
-                    onClick={() => navigate(`/about/committees/${c.id}`)}
-                    className={`px-3.5 py-2 rounded-xl font-sans text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
-                      isActive 
-                        ? 'bg-[#0B2545] text-white shadow-xs' 
-                        : 'bg-white text-slate-600 hover:bg-slate-200/70 border border-slate-200/60'
-                    }`}
-                  >
-                    {c.name}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Committee Card Details */}
           <div className="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6 flex flex-col items-start">
             <div className="flex items-center gap-3">
