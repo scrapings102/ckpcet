@@ -5,24 +5,18 @@
  */
 export function cdn(url: string | undefined, width = 800, quality = 90): string {
   if (!url) return "";
-  if (url.startsWith("data:") || url.includes("unsplash.com")) return url;
   
+  // Return direct URL to avoid third-party proxy delays
   if (url.includes("wsrv.nl")) {
     try {
       const parsed = new URL(url);
       const targetUrl = parsed.searchParams.get("url");
       if (targetUrl) {
-        return `https://wsrv.nl/?url=${encodeURIComponent(targetUrl)}&w=${width}&output=webp&q=${quality}`;
+        return targetUrl.startsWith("http") ? targetUrl : `https://${targetUrl}`;
       }
     } catch {
       return url;
     }
-    return url;
-  }
-
-  if (url.includes("ckpcmc.org") || url.includes("ckpcet.ac.in")) {
-    const cleanUrl = url.replace(/^https?:\/\//, "");
-    return `https://wsrv.nl/?url=${encodeURIComponent(cleanUrl)}&w=${width}&output=webp&q=${quality}`;
   }
 
   return url;

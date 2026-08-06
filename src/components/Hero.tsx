@@ -12,7 +12,7 @@ interface HeroProps {
   onOpenAdmissions?: () => void;
 }
 
-const HERO_IMAGE = "https://wsrv.nl/?url=ckpcet.ac.in/img/home-page/slider/si-01.jpg&w=2400&output=webp&q=95";
+const HERO_IMAGE = "https://ckpcet.ac.in/img/home-page/slider/si-01.jpg";
 
 // Tablet and mobile band — covers all touch/mobile/tablet screens.
 const TABLET_MEDIA_QUERY = "(max-width: 1024px)";
